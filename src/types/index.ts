@@ -1,112 +1,81 @@
-import { JSX, Setter } from "solid-js";
+import type { Article } from './entities/Article'
+import type { Comment } from './entities/Comment'
+import type { Profile } from './entities/Profile'
+import type { User } from './entities/User'
+import { Optional } from './Utils'
 
-export type Children =
-  | number
-  | boolean
-  | Node
-  | JSX.Element
-  | JSX.ArrayElement
-  | JSX.FunctionElement
-  | (string & {});
-export interface User {
-  email: string;
-  token: string;
-  username: string;
-  bio: string;
-  image: string;
-}
-
-export interface Profile {
-  username: string;
-  bio: string;
-  image: string;
-  following: boolean;
-}
-
-export interface Author {
-  username: string;
-  bio: string;
-  image: string;
-  following: boolean;
-}
-
-export type Tag = string;
-
-export interface Article {
-  slug: string;
-  title: string;
-  description: string;
-  body: string;
-  tagList: Tag[];
-  createdAt: string;
-  updatedAt: string;
-  favorited: boolean;
-  favoritesCount: number;
-  author: Author;
-}
-
-export interface Comment {
-  id: number;
-  createdAt: string;
-  updatedAt: string;
-  body: string;
-  author: Author;
-}
-
-export type State = {
-  readonly articles: { [slug: string]: Article } | null;
-  readonly comments: Comment[] | null;
-  readonly tags: Tag[] | null;
-  readonly profile: Profile | null;
-  readonly currentUser: User | null;
-  page: number;
-  totalPagesCount: number;
-  token: string;
-  appName: string;
-  articleSlug: string;
-};
-
-export type Actions = {
-  loadArticle?: (slug: string) => Promise<void>;
-  loadArticles?: (predicate: {
-    tag?: Tag;
-    author?: string;
-    myFeed?: boolean;
-    favoritedBy?: string;
-  }) => Promise<void>;
-  createArticle?: (article: Article) => Promise<Article>;
-  updateArticle?: (
-    article: Optional<Article, keyof Article>
-  ) => Promise<Article>;
-  deleteArticle?: (slug: string) => Promise<void>;
-  setPage?: (page: number) => Promise<void>;
-  setSlug?: (slug: string) => Promise<void>;
-  unmakeFavorite?: (slug: string) => Promise<void>;
-  makeFavorite?: (slug: string) => Promise<void>;
-  createComment?: any;
-  deleteComment?: any;
-  loadComments?: any;
-  register?: any;
-  pullUser?: any;
-  login?: any;
-  logout?: any;
-  setToken?: any;
-  updateUser?: any;
-  unfollow?: () => Promise<void>;
-  follow?: () => Promise<void>;
-  loadProfile?: Setter<string>;
-};
-
-export type ResponseType<K extends string, V> = Promise<{ [P in K]: V }>;
-
-export type ResponseTypes<T> = Promise<T>;
-
-export type OptionalPick<T, K extends keyof T> = Pick<Partial<T>, K>;
-
-export type Optional<T, K extends keyof T> = OptionalPick<T, K> & Omit<T, K>;
+export * from './entities/Agent'
+export * from './entities/Article'
+export * from './entities/Author'
+export * from './entities/Comment'
+export * from './entities/Profile'
+export * from './entities/Tag'
+export * from './entities/User'
+export * from './Common'
+export * from './Store'
+export * from './Utils'
 
 export type CustomErrors = {
   errors: {
-    errorName: string[];
-  };
-};
+    errorName: string[]
+  }
+}
+
+export type AuthUser = Pick<User, 'username' | 'email'> & { password: string }
+
+export type CreateUserRequest = {
+  user: AuthUser
+}
+
+export type UpdateUserRequest = {
+  user: Optional<User, keyof User>
+}
+
+export type LoginRequest = {
+  user: Omit<AuthUser, 'username'>
+}
+
+export type CreateArticleRequest = {
+  article: Article
+}
+
+export type UpdateArticleRequest = {
+  article: Optional<Article, keyof Article>
+}
+
+export type CreateCommentRequest = {
+  comment: Comment
+}
+
+export type BodyArgTypes =
+  | LoginRequest
+  | CreateUserRequest
+  | UpdateUserRequest
+  | CreateArticleRequest
+  | UpdateArticleRequest
+  | CreateCommentRequest
+
+export type Response = {
+  errors?: string[]
+}
+
+export type UserResponse = Response & {
+  user: Omit<User, 'password'>
+}
+
+export type ProfileResponse = Response & {
+  profile: Profile
+}
+
+export type ArticleResponse = Response & {
+  article: Article
+}
+
+export type ArticlesResponse = Response & {
+  articles: Article[]
+  articlesCount: number
+}
+
+export type CommentResponse = Response & {
+  comment: Comment
+}

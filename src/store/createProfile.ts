@@ -1,7 +1,7 @@
-import { createSignal, createResource } from "solid-js";
+import { createSignal, createResource } from 'solid-js'
 
-import { Actions, State } from "~/types";
-import type { Agent } from "./createAgent";
+import { Actions, State } from '~/State'
+import type { Agent } from './createAgent'
 
 export default function createProfile(
   agent: Agent,
@@ -9,30 +9,30 @@ export default function createProfile(
   state: State,
   setState
 ) {
-  const [username, setUsername] = createSignal<string>();
-  const [profile] = createResource(username, agent.Profile.get);
+  const [username, setUsername] = createSignal<string>()
+  const [profile] = createResource(username, agent.Profile.get)
   Object.assign(actions, {
     loadProfile: setUsername,
     async follow() {
       if (state.profile && !state.profile.following) {
-        setState("profile", "following", true);
+        setState('profile', 'following', true)
         try {
-          await agent.Profile.follow(state.profile.username);
+          await agent.Profile.follow(state.profile.username)
         } catch (err) {
-          setState("profile", "following", false);
+          setState('profile', 'following', false)
         }
       }
     },
     async unfollow() {
       if (state.profile && state.profile.following) {
-        setState("profile", "following", false);
+        setState('profile', 'following', false)
         try {
-          await agent.Profile.unfollow(state.profile.username);
+          await agent.Profile.unfollow(state.profile.username)
         } catch (err) {
-          setState("profile", "following", true);
+          setState('profile', 'following', true)
         }
       }
-    },
-  });
-  return profile;
+    }
+  })
+  return profile
 }
