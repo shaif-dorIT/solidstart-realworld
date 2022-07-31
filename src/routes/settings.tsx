@@ -1,11 +1,11 @@
-import { useNavigate } from 'solid-app-router'
 import { createStore } from 'solid-js/store'
+import { useNavigate } from 'solid-app-router'
 
 import { useStore } from '~/store'
 import Form from '~/components/Form/Form'
 import TextArea from '~/components/Form/TextArea'
 import TextInput from '~/components/Form/TextInput'
-import { TextAreaEvent, TextInputEvent } from '~/types'
+import type { TextAreaEvent, TextInputEvent, UpdateUser } from '~/types'
 
 type SettingsState = {
   image: string
@@ -31,8 +31,17 @@ export default () => {
     (field: keyof SettingsState) => (ev: TextInputEvent | TextAreaEvent) =>
       setState(field, ev.currentTarget.value)
 
+  const userFields = (): UpdateUser => ({
+    bio: state.bio,
+    email: state.email,
+    image: state.image,
+    password: state.password,
+    username: state.username
+  })
+
   const submitForm = () => {
-    const user = Object.assign({}, state)
+    const user = userFields()
+
     if (!user.password) delete user.password
     if (!user.image) delete user.image
     setState({ updatingUser: true })
@@ -40,7 +49,7 @@ export default () => {
   }
 
   const logoutFn = async () => {
-    await logout()
+    logout()
     navigate('/')
   }
 
@@ -54,7 +63,7 @@ export default () => {
               buttonText='Update Settings'
               submitFn={submitForm}
               postSubmitFn={() => setState({ updatingUser: false })}
-              redirect={`@${state.username}`}
+              redirect={`/@${state.username}`}
             >
               <TextInput
                 placeholder='URL of profile picture'

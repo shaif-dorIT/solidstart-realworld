@@ -2,6 +2,33 @@ import type { RequestContext } from 'solid-start/server/types'
 
 const API_ROOT = 'https://api.realworld.io/api'
 
+const mutations = async (
+  method: 'post' | 'put' | 'delete',
+  apiPath: string,
+  body?: unknown
+) => {
+  const fetchOptions: RequestInit = {
+    method: method
+  }
+
+  if (method === 'post' && !body) {
+    return [400, { msg: 'need to provide a body in a POST request' }]
+  } else {
+    fetchOptions.body = JSON.stringify(body)
+    fetchOptions.headers = {
+      'Content-Type': 'application/json'
+    }
+  }
+
+  const resp = await fetch(API_ROOT + apiPath, fetchOptions)
+
+  if (resp.ok) {
+    return [resp.status, { msg: resp.statusText, data: await resp.json() }]
+  } else {
+    return [resp.status, { msg: resp.statusText }]
+  }
+}
+
 const serverFunction = async (ctx: RequestContext) => {
   const body = await ctx.request.json()
 

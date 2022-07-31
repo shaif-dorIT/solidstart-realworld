@@ -13,8 +13,8 @@
   },
   "type": "module",
   "devDependencies": {
-    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@testing-library/jest-dom": "^5.16.2",
+    "@types/dompurify": "^2.3.3",
     "@types/marked": "^4.0.3",
     "@types/testing-library__jest-dom": "^5.14.3",
     "@typescript-eslint/eslint-plugin": "^5.31.0",

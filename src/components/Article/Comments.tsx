@@ -8,16 +8,16 @@ import NavLink from '~/components/NavBar/NavLink'
 
 export default (props: { slug: string }) => {
   const [store, { createComment, deleteComment, loadComments }] = useStore()
-  const { currentUser } = store
+  const currentUser = () => store.currentUser
   const handleDeleteComment = (commentId: number) => deleteComment(commentId)
 
   onMount(() => loadComments(props.slug))
 
   return (
     <div class='col-xs-12 col-md-8 offset-md-2'>
-      {currentUser ? (
+      {currentUser() ? (
         <CommentInput
-          avatarUrl={currentUser.image}
+          avatarUrl={currentUser().image}
           createComment={createComment}
         />
       ) : (
@@ -33,7 +33,7 @@ export default (props: { slug: string }) => {
           {(comment) => (
             <Comment
               comment={comment}
-              currentUser={currentUser}
+              currentUser={currentUser()}
               onDelete={handleDeleteComment}
             />
           )}

@@ -2,8 +2,15 @@ import type { SetStoreFunction } from 'solid-js/store'
 
 import { createResource, createSignal } from 'solid-js'
 
-import type { Agent, ArticlePredicate, Optional, Tag } from '~/types'
-import { Article, Actions, State } from '~/Types'
+import type {
+  Actions,
+  Agent,
+  Article,
+  ArticlePredicate,
+  Optional,
+  State,
+  Tag
+} from '~/types'
 
 const LIMIT = 10
 

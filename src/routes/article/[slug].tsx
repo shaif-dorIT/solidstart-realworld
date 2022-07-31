@@ -1,5 +1,5 @@
-import { onMount } from 'solid-js'
 import DOMPurify from 'dompurify'
+import { onMount } from 'solid-js'
 import { Parser, Lexer } from 'marked'
 import { useNavigate, useParams } from 'solid-app-router'
 
@@ -47,6 +47,8 @@ export default () => {
               }
             />
 
+            <hr />
+
             <ul class='tag-list'>
               {article()?.tagList.map((tag) => (
                 <li class='tag-default tag-pill tag-outline'>{tag}</li>
@@ -57,7 +59,13 @@ export default () => {
 
         <hr />
 
-        <div class='article-actions' />
+        <div class='article-actions'>
+          <ArticleMeta
+            article={article()}
+            canModify={canModify()}
+            onDelete={handleDeleteArticle}
+          />
+        </div>
 
         <div class='row'>
           <Comments slug={slug} />

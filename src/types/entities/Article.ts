@@ -1,6 +1,4 @@
-import { Tag } from './Tag'
-import { Author } from './Author'
-import { UserName } from './User'
+import { Profile, ErrorResponse, Tag, UserName } from '~/types'
 
 export type ArticlePredicate = {
   myFeed?: boolean
@@ -9,15 +7,48 @@ export type ArticlePredicate = {
   author?: UserName
 }
 
-export interface Article {
+export type Article = {
   slug: string
   title: string
   description: string
   body: string
-  tagList: Tag[]
+  tagList: string[]
+  /** Format: date-time */
   createdAt: string
+  /** Format: date-time */
   updatedAt: string
   favorited: boolean
   favoritesCount: number
-  author: Author
+  author: Profile
+}
+
+export type NewArticle = {
+  title: string
+  description: string
+  body: string
+  tagList?: string[]
+}
+
+export type UpdateArticle = {
+  title?: string
+  description?: string
+  body?: string
+  tagList?: string[]
+}
+
+export type NewArticleRequest = {
+  article: NewArticle
+}
+
+export type UpdateArticleRequest = {
+  article: UpdateArticle
+}
+
+export type SingleArticleResponse = ErrorResponse & {
+  article: Article
+}
+
+export type MultipleArticlesResponse = ErrorResponse & {
+  articles: Article[]
+  articlesCount: number
 }

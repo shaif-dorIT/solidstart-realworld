@@ -1,29 +1,21 @@
-import { JSX } from 'solid-js'
+import type { JSX } from 'solid-js'
 
-export type MouseButtonEvent =
-  | MouseEvent & { currentTarget: HTMLButtonElement; target: Element }
-
-export type MouseLIEvent =
-  | MouseEvent & { currentTarget: HTMLLIElement; target: Element }
-
-export type TextAreaEvent = Event & {
-  currentTarget: HTMLTextAreaElement
-  target: Element
-}
-
-export type TextInputEvent = Event & {
-  currentTarget: HTMLInputElement
-  target: Element
-}
-
-export type TextInputKeyboardEvent = KeyboardEvent & {
-  currentTarget: HTMLInputElement
-  target: Element
-}
-export type TextInputFocusEvent = FocusEvent & {
-  currentTarget: HTMLInputElement
-  target: Element
-}
+import type {
+  LoginUserRequest,
+  NewArticleRequest,
+  NewCommentRequest,
+  Optional,
+  UpdateUserRequest,
+  UpdateArticleRequest,
+  NewUserRequest,
+  UserResponse,
+  ProfileResponse,
+  SingleArticleResponse,
+  MultipleArticlesResponse,
+  MultipleCommentsResponse,
+  SingleCommentResponse,
+  TagsResponse
+} from '~/types'
 
 export type Children =
   | number
@@ -33,3 +25,28 @@ export type Children =
   | JSX.ArrayElement
   | JSX.FunctionElement
   | (string & Record<string, unknown>)
+
+type GenericErrorModel = {
+  errors: {
+    body: string[]
+  }
+}
+
+export type EntityRequest =
+  | LoginUserRequest
+  | NewUserRequest
+  | UpdateUserRequest
+  | NewArticleRequest
+  | UpdateArticleRequest
+  | NewCommentRequest
+
+export type EntityResponse =
+  | UserResponse
+  | SingleArticleResponse
+  | MultipleArticlesResponse
+  | ProfileResponse
+  | SingleCommentResponse
+  | MultipleCommentsResponse
+  | TagsResponse
+
+export type ErrorResponse = Optional<GenericErrorModel, keyof GenericErrorModel>

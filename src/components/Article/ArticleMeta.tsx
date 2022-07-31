@@ -1,16 +1,10 @@
 import { Show } from 'solid-js'
-import type { MouseButtonEvent } from '~/types'
+
+import type { Article, MouseButtonEvent } from '~/types'
 import NavLink from '~/components/NavBar/NavLink'
 
 type ArticleMetaProps = {
-  article: {
-    author: {
-      username: string
-      image: string
-    }
-    createdAt: string | number | Date
-    slug: string
-  }
+  article: Article
   canModify: boolean
   onDelete: (event: MouseButtonEvent) => void
 }

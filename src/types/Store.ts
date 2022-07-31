@@ -1,14 +1,21 @@
+import { UserName } from './entities/User'
 import type { Setter } from 'solid-js'
 
 import type {
   Article,
   Comment,
-  CommentResponse,
-  Optional,
   Profile,
   Tag,
-  User
-} from '.'
+  UpdateUser,
+  User,
+  MultipleArticlesResponse,
+  MultipleCommentsResponse,
+  SingleArticleResponse,
+  SingleCommentResponse,
+  ProfileResponse,
+  UserResponse,
+  UpdateArticle
+} from '~/types'
 
 export type State = {
   readonly articles: { [slug: string]: Article } | null
@@ -27,36 +34,34 @@ export type Actions = {
   loadArticle?: (slug: string) => Promise<void>
   loadArticles?: (predicate: {
     tag?: Tag
-    author?: string
+    author?: UserName
     myFeed?: boolean
     favoritedBy?: string
-  }) => Promise<void>
-  createArticle?: (article: Article) => Promise<Article>
-  updateArticle?: (
-    article: Optional<Article, keyof Article>
-  ) => Promise<Article>
+  }) => Promise<MultipleArticlesResponse>
+  createArticle?: (article: Article) => Promise<SingleArticleResponse>
+  updateArticle?: (article: UpdateArticle) => Promise<SingleArticleResponse>
   deleteArticle?: (slug: string) => Promise<void>
   setPage?: (page: number) => Promise<void>
   setSlug?: (slug: string) => Promise<void>
-  unmakeFavorite?: (slug: string) => Promise<void>
-  makeFavorite?: (slug: string) => Promise<void>
-  createComment?: (comment: Comment) => Promise<CommentResponse>
-  deleteComment?: (commentId: number) => Promise<CommentResponse>
+  unmakeFavorite?: (slug: string) => Promise<SingleArticleResponse>
+  makeFavorite?: (slug: string) => Promise<SingleArticleResponse>
+  createComment?: (comment: Comment) => Promise<SingleCommentResponse>
+  deleteComment?: (commentId: number) => Promise<SingleCommentResponse>
   loadComments?: (
     articleSlug: string,
     reload?: boolean | undefined
-  ) => Comment[] | Promise<Comment[]>
+  ) => Promise<MultipleCommentsResponse>
   register?: (
     username: string,
     email: string,
     password: string
-  ) => Promise<void>
+  ) => Promise<UserResponse>
   pullUser?: () => true
-  login?: (email: string, password: string) => Promise<void>
+  login?: (email: string, password: string) => Promise<UserResponse>
   logout?: () => void
-  updateUser?: (newUser: User) => Promise<void>
+  updateUser?: (updatedUserData: UpdateUser) => Promise<UserResponse>
   setToken?: (token: string) => void
-  unfollow?: () => Promise<void>
-  follow?: () => Promise<void>
+  unfollow?: () => Promise<ProfileResponse>
+  follow?: () => Promise<ProfileResponse>
   loadProfile?: Setter<string>
 }

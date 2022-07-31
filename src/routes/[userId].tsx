@@ -6,8 +6,7 @@ import NavLink from '~/components/NavBar/NavLink'
 import ArticleList from '~/components/Article/ArticleList'
 
 export default (props: { username: string; routeName: string }) => {
-  const params = useParams()
-  const { userId } = params
+  const { userId } = useParams()
 
   const [store, { setPage, loadProfile, loadArticles, unfollow, follow }] =
     useStore()

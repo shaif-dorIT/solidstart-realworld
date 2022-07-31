@@ -1,8 +1,8 @@
 lockfileVersion: 5.4
 
 specifiers:
-  '@originjs/vite-plugin-commonjs': ^1.0.3
   '@testing-library/jest-dom': ^5.16.2
+  '@types/dompurify': ^2.3.3
   '@types/marked': ^4.0.3
   '@types/testing-library__jest-dom': ^5.14.3
   '@typescript-eslint/eslint-plugin': ^5.31.0
@@ -35,8 +35,8 @@ dependencies:
   solid-devtools: 0.8.0_pylvlfa2lfkwlzi6muo5ove6ni
 
 devDependencies:
-  '@originjs/vite-plugin-commonjs': 1.0.3
   '@testing-library/jest-dom': 5.16.4
+  '@types/dompurify': 2.3.3
   '@types/marked': 4.0.3
   '@types/testing-library__jest-dom': 5.14.5
   '@typescript-eslint/eslint-plugin': 5.31.0_d5zwcxr4bwkhmuo464cb3a2puu
@@ -1793,15 +1793,6 @@ packages:
       fastq: 1.13.0
     dev: true
 
-  /@originjs/vite-plugin-commonjs/1.0.3:
-    resolution:
-      {
-        integrity: sha512-KuEXeGPptM2lyxdIEJ4R11+5ztipHoE7hy8ClZt3PYaOVQ/pyngd2alaSrPnwyFeOW1UagRBaQ752aA1dTMdOQ==
-      }
-    dependencies:
-      esbuild: 0.14.50
-    dev: true
-
   /@otonashixav/solid-flip/0.10.5_solid-js@1.4.8:
     resolution:
       {
@@ -2271,6 +2262,15 @@ packages:
       }
     dev: true
 
+  /@types/dompurify/2.3.3:
+    resolution:
+      {
+        integrity: sha512-nnVQSgRVuZ/843oAfhA25eRSNzUFcBPk/LOiw5gm8mD9/X7CNcbRkQu/OsjCewO8+VIYfPxUnXvPEVGenw14+w==
+      }
+    dependencies:
+      '@types/trusted-types': 2.0.2
+    dev: true
+
   /@types/estree/0.0.39:
     resolution:
       {
@@ -2364,6 +2364,13 @@ packages:
       }
     dependencies:
       '@types/jest': 28.1.6
+    dev: true
+
+  /@types/trusted-types/2.0.2:
+    resolution:
+      {
+        integrity: sha512-F5DIZ36YVLE+PN+Zwws4kJogq47hNgX3Nx6WyDJ3kcplxyke3XIzB8uK5n/Lpm1HBsbGzd6nmGehL8cPekP+Tg==
+      }
     dev: true
 
   /@types/yargs-parser/21.0.0:

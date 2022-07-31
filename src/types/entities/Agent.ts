@@ -1,14 +1,19 @@
-import { Article, ArticlePredicate } from './Article'
-import { Comment } from './Comment'
-import { User } from './User'
 import {
-  ArticlesResponse,
-  ArticleResponse,
-  UserResponse,
-  CommentResponse,
-  ProfileResponse
-} from '../index'
-import { Optional } from '../Utils'
+  Article,
+  ArticlePredicate,
+  MultipleArticlesResponse,
+  MultipleCommentsResponse,
+  NewComment,
+  Optional,
+  ProfileResponse,
+  SingleArticleResponse,
+  SingleCommentResponse,
+  TagsResponse,
+  User,
+  UserResponse
+} from '~/types'
+
+export type SupportedRestHttpMethods = 'get' | 'post' | 'put' | 'delete'
 
 export type Agent = {
   Articles: {
@@ -16,31 +21,31 @@ export type Agent = {
       page: number,
       lim?: number,
       predicate?: ArticlePredicate
-    ) => Promise<ArticlesResponse>
+    ) => Promise<MultipleArticlesResponse>
     byAuthor: (
       author: string,
       page: number,
       size?: number
-    ) => Promise<ArticlesResponse>
+    ) => Promise<SingleArticleResponse>
     byTag: (
       tag: string,
       page: number,
       lim?: number
-    ) => Promise<ArticlesResponse>
-    del: (slug: string) => Promise<ArticleResponse>
-    favorite: (slug: string) => Promise<ArticleResponse>
+    ) => Promise<MultipleArticlesResponse>
+    del: (slug: string) => Promise<SingleArticleResponse>
+    favorite: (slug: string) => Promise<SingleArticleResponse>
     favoritedBy: (
       author: string,
       page: number,
       size?: number
-    ) => Promise<ArticlesResponse>
-    feed: (size?: number, offset?: number) => Promise<ArticlesResponse>
-    get: (slug: string) => Promise<ArticleResponse>
-    unfavorite: (slug: string) => Promise<ArticleResponse>
+    ) => Promise<MultipleArticlesResponse>
+    feed: (size?: number, offset?: number) => Promise<MultipleArticlesResponse>
+    get: (slug: string) => Promise<SingleArticleResponse>
+    unfavorite: (slug: string) => Promise<SingleArticleResponse>
     update: (
       article: Optional<Article, keyof Article>
-    ) => Promise<ArticleResponse>
-    create: (article: Article) => Promise<ArticleResponse>
+    ) => Promise<SingleArticleResponse>
+    create: (article: Article) => Promise<SingleArticleResponse>
   }
   Auth: {
     current: () => Promise<User>
@@ -53,14 +58,17 @@ export type Agent = {
     save: (user: Optional<User, keyof User>) => Promise<UserResponse>
   }
   Comments: {
-    create: (slug: string, comment: Comment) => Promise<CommentResponse>
-    delete: (slug: string, commentId: number) => Promise<CommentResponse>
-    forArticle: (slug: string) => Promise<Comment[]>
+    create: (
+      slug: string,
+      comment: NewComment
+    ) => Promise<SingleCommentResponse>
+    delete: (slug: string, commentId: number) => Promise<SingleCommentResponse>
+    forArticle: (slug: string) => Promise<MultipleCommentsResponse>
   }
   Profile: {
     follow: (username: string) => Promise<ProfileResponse>
     get: (username: string) => Promise<ProfileResponse>
     unfollow: (username: string) => Promise<ProfileResponse>
   }
-  Tags: { getAll: () => Promise<string[]> }
+  Tags: { getAll: () => Promise<TagsResponse> }
 }
