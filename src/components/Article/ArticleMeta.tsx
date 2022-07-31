@@ -1,12 +1,6 @@
-<<<<<<< HEAD
 import { Show } from 'solid-js'
 import type { MouseButtonEvent } from '~/types'
 import NavLink from '~/components/NavBar/NavLink'
-=======
-import NavLink from '~/components/NavBar/NavLink'
-import { Show } from 'solid-js'
-import { MouseButtonEvent } from '~/types'
->>>>>>> master
 
 type ArticleMetaProps = {
   article: {
@@ -19,13 +13,9 @@ type ArticleMetaProps = {
   }
   canModify: boolean
   onDelete: (event: MouseButtonEvent) => void
-<<<<<<< HEAD
 }
 
 export default (props: ArticleMetaProps) => {
-=======
-}) => {
->>>>>>> master
   return (
     <div class='article-meta'>
       <NavLink

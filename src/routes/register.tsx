@@ -4,10 +4,7 @@ import { useStore } from '~/store'
 import Form from '~/components/Form/Form'
 import NavLink from '~/components/NavBar/NavLink'
 import TextInput from '~/components/Form/TextInput'
-<<<<<<< HEAD
 import { TextInputEvent } from '~/types'
-=======
->>>>>>> master
 
 type AuthState = {
   username: string
@@ -42,13 +39,7 @@ export default () => {
             </p>
             <Form
               buttonText='Sign Up'
-<<<<<<< HEAD
               submitFn={handleRegisterRequest}
-=======
-              submitFn={() =>
-                register(state.username, state.email, state.password)
-              }
->>>>>>> master
             >
               <TextInput
                 placeholder='Username'

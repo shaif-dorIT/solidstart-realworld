@@ -1,11 +1,6 @@
-<<<<<<< HEAD
 import { onMount } from 'solid-js'
 import DOMPurify from 'dompurify'
 import { Parser, Lexer } from 'marked'
-=======
-import { Parser, Lexer } from 'marked'
-import { onMount } from 'solid-js'
->>>>>>> master
 import { useNavigate, useParams } from 'solid-app-router'
 
 import { useStore } from '~/store'

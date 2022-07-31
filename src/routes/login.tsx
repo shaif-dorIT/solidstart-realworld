@@ -4,10 +4,7 @@ import { useStore } from '~/store'
 import Form from '~/components/Form/Form'
 import NavLink from '~/components/NavBar/NavLink'
 import TextInput from '~/components/Form/TextInput'
-<<<<<<< HEAD
 import { TextInputEvent } from '~/types'
-=======
->>>>>>> master
 
 type AuthState = {
   email: string
@@ -17,11 +14,8 @@ type AuthState = {
 export default () => {
   const [state, setState] = createStore<AuthState>({ email: '', password: '' }),
     [, { login }] = useStore()
-<<<<<<< HEAD
 
   const handleLoginRequest = () => login(state.email, state.password)
-=======
->>>>>>> master
 
   return (
     <div class='auth-page'>
@@ -37,11 +31,7 @@ export default () => {
             </p>
             <Form
               buttonText='Sign In'
-<<<<<<< HEAD
               submitFn={handleLoginRequest}
-=======
-              submitFn={() => login(state.email, state.password)}
->>>>>>> master
             >
               <TextInput
                 placeholder='Email'
