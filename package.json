@@ -28,6 +28,7 @@
     "prettier": "^2.7.1",
     "solid-app-router": "^0.4.2",
     "solid-testing-library": "^0.3.0",
+    "terser": "^5.14.2",
     "typescript": "^4.4.3",
     "undici": "^4.12.2",
     "vite-plugin-inspect": "^0.3.13",
