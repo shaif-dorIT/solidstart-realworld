@@ -1,7 +1,13 @@
 import type { SetStoreFunction } from 'solid-js/store'
 import { createSignal, createResource, batch } from 'solid-js'
 
+<<<<<<< HEAD
 import type { Actions, Agent, State, User } from '~/types'
+=======
+import type { Agent } from './createAgent'
+import type { User } from '~/types'
+import { Actions, State } from '~/State'
+>>>>>>> master
 
 export default function createAuth(
   agent: Agent,

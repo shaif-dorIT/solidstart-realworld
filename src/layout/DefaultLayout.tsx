@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 import type { Children } from '~/types'
+=======
+import { Children } from '~/Children'
+>>>>>>> master
 import NavBar from '~/components/NavBar/NavBar'
 
 import './defaultLayout.css'

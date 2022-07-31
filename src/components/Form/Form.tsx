@@ -15,7 +15,11 @@ type FormProps = {
   buttonText?: string
   children?: Children
   redirect?: string
+<<<<<<< HEAD
   submitFn: (event: Event) => Promise<void> | Promise<unknown>
+=======
+  submitFn: (event: Event) => Promise<void> | Promise<any>
+>>>>>>> master
   postSubmitFn?: () => Promise<void> | void
 }
 

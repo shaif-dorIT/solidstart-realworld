@@ -1,11 +1,18 @@
-/// <reference types="vite/client" />
 /// <reference types="vitest" />
+<<<<<<< HEAD
 import { defineConfig } from 'vite'
 import solid from 'solid-start'
 
 import type { UserConfig } from 'vitest/config'
+=======
+/// <reference types="vite/client" />
 
-const vitestConfig: UserConfig = {
+import { defineConfig } from 'vite'
+import solid from 'solid-start'
+import { viteCommonjs } from '@originjs/vite-plugin-commonjs'
+>>>>>>> master
+
+export default defineConfig({
   test: {
     globals: true,
     environment: 'jsdom',
@@ -22,24 +29,38 @@ const vitestConfig: UserConfig = {
     // or both out to improve performance:
     // threads: false,
     // isolate: false,
+<<<<<<< HEAD
   }
 }
 
 const viteConfig = defineConfig({
   test: vitestConfig.test,
   plugins: [
+=======
+  },
+  plugins: [
+    viteCommonjs(),
+>>>>>>> master
     solid({
       ssr: true
     })
   ],
   build: {
     target: 'esnext',
+<<<<<<< HEAD
     polyfillModulePreload: false
+=======
+>>>>>>> master
     // polyfillDynamicImport: false
+    polyfillModulePreload: false
   },
   resolve: {
     conditions: ['development', 'browser']
   }
+<<<<<<< HEAD
 }) as UserConfig
 
 export default viteConfig
+=======
+})
+>>>>>>> master
