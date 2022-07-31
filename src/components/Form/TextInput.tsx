@@ -1,18 +1,34 @@
+<<<<<<< HEAD
 import type {
   Children,
   TextInputEvent,
   TextInputFocusEvent,
   TextInputKeyboardEvent
 } from '~/types'
+=======
+import type { Children } from '~/types'
+>>>>>>> master
 
 type TextInputProps = {
   children?: Children
   value: string
   disabled?: boolean
   placeholder: string
+<<<<<<< HEAD
   onBlur?: (ev: any) => void
   onKeyUp?: (ev: any) => void
   onChange?: (ev: any) => void
+=======
+<<<<<<< HEAD
+  onBlur?: (ev: TextInputFocusEvent) => void
+  onKeyUp?: (ev: TextInputKeyboardEvent) => void
+  onChange?: (ev: TextInputEvent) => void
+=======
+  onBlur?: (ev: any) => void
+  onKeyUp?: (ev: any) => void
+  onChange?: (ev: any) => void
+>>>>>>> master
+>>>>>>> 4af4b2cfbde519398a69976e4cbf0b831d966671
   type?: 'text' | 'password'
 }
 

@@ -3,7 +3,11 @@ import { createStore } from 'solid-js/store'
 import { createComputed, createEffect, For, Show } from 'solid-js'
 
 import { useStore } from '~/store'
+<<<<<<< HEAD
 import type { Article, TextAreaEvent, TextInputEvent } from '~/types'
+=======
+import type { Article } from '~/types'
+>>>>>>> master
 import Form from '~/components/Form/Form'
 import TextArea from '~/components/Form/TextArea'
 import TextInput from '~/components/Form/TextInput'
@@ -31,8 +35,14 @@ export default () => {
   })
 
   const updateState =
+<<<<<<< HEAD
     (field: keyof EditorState) => (ev: TextAreaEvent | TextInputEvent) =>
       setState(field, ev.currentTarget.value)
+=======
+    (field: keyof EditorState) =>
+    (ev: { target: HTMLInputElement | HTMLTextAreaElement }) =>
+      setState(field, ev.target.value)
+>>>>>>> master
 
   const handleAddTag = () => {
     if (state.tagInput) {
@@ -45,7 +55,14 @@ export default () => {
       setState('tagList', (tags) => tags.filter((t) => t !== tag))
   }
 
+<<<<<<< HEAD
   const handleTagInputKeyDown = (ev) => {
+=======
+  const handleTagInputKeyDown = (ev: {
+    keyCode: number
+    preventDefault: () => void
+  }) => {
+>>>>>>> master
     switch (ev.keyCode) {
       case 13: // Enter
       case 9: // Tab
@@ -58,6 +75,7 @@ export default () => {
     }
   }
 
+<<<<<<< HEAD
   const getFields = () => {
     return {
       slug: slug,
@@ -73,6 +91,14 @@ export default () => {
     return updateArticle(getFields() as Article)
   }
 
+=======
+  const submitForm = (_ev: Event) => {
+    setState({ inProgress: true })
+    const { inProgress, tagInput, ...articleFields } = state
+    return updateArticle(articleFields as Article)
+  }
+
+>>>>>>> master
   const postSubmit = () => setState({ inProgress: false })
 
   createComputed(() => {
