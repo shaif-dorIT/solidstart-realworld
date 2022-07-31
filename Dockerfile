@@ -12,7 +12,7 @@ ENV NODE_ENV = "production"
 
 COPY ["package.json", "pnpm-lock.yaml", "./" ]
 
-RUN pnpm i --production
+RUN pnpm i
 
 USER node
 
@@ -27,6 +27,9 @@ USER node
 
 WORKDIR /app
 
-COPY --from=builder /app /app
+COPY --from=builder /app/dist /app
 
-CMD [ "pnpm", "" ]
+RUN pnpm i --production
+
+
+CMD [ "pnpm", "start" ]
