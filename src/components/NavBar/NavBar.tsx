@@ -1,6 +1,7 @@
 import { Show } from 'solid-js'
-import { useStore } from '~/store'
+
 import NavLink from './NavLink'
+import { useStore } from '~/store'
 
 export default () => {
   const [store] = useStore()
@@ -8,7 +9,6 @@ export default () => {
   return (
     <nav class='navbar navbar-light'>
       <div class='container'>
-        {/* <div style={"background-color: 'lightblue;height: 50vh'"}>{JSON.stringify(store)}</div> */}
         <NavLink
           class='navbar-brand'
           route='/'

@@ -1,6 +1,5 @@
-/* eslint-disable prefer-const */
 import { createStore } from 'solid-js/store'
-import { createContext, createEffect, Resource, useContext } from 'solid-js'
+import { createContext, useContext } from 'solid-js'
 import { isServer } from 'solid-js/web'
 
 import createAuth from './createAuth'
@@ -10,20 +9,12 @@ import createProfile from './createProfile'
 import createArticles from './createArticles'
 import createComments from './createComments'
 
-import type { Article, Actions, Comment, State, User } from '~/types'
-import { Children } from '~/Children'
+import type { Actions, Children, State } from '~/types'
 
 const StoreContext = createContext<[State, Actions]>()
 
 export function Provider(props: { children: Children }) {
-  let articles: Resource<{
-      [slug: string]: Article
-    }>,
-    comments: Resource<Comment[]>,
-    tags: Resource<string[]>,
-    profile,
-    currentUser: Resource<User>
-
+  let articles, comments, tags, profile, currentUser
   const extractToken = () => {
     if (isServer) return undefined
     return localStorage.getItem('jwt') ?? undefined
@@ -60,9 +51,7 @@ export function Provider(props: { children: Children }) {
   profile = createProfile(agent, actions, state, setState)
   currentUser = createAuth(agent, actions, setState)
 
-  createEffect(() => {
-    if (state.token) (actions as Actions).pullUser()
-  })
+  if (state.token) (actions as Actions).pullUser()
 
   return (
     <StoreContext.Provider value={store}>

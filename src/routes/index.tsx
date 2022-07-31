@@ -15,6 +15,7 @@ export default () => {
   const { token, appName } = store
   const [tab, setTab] = createSignal(token ? 'feed' : 'all')
 
+  // eslint-disable-next-line solid/reactivity
   const [, start] = useTransition()
 
   const getPredicate = () => {
@@ -31,10 +32,11 @@ export default () => {
   }
 
   const handleSetPage = (page: number) => {
-    start(() => {
+    const test = () => {
       setPage(page)
       loadArticles(getPredicate())
-    })
+    }
+    start(test)
   }
 
   createComputed(() => loadArticles(getPredicate()))
@@ -121,7 +123,6 @@ export default () => {
               </Suspense>
             </div>
           </div>
-          <textarea onChange={(ev) => console.log({ type: typeof ev })} />
         </div>
       </div>
     </div>

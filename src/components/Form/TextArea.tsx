@@ -1,12 +1,12 @@
-import type { TextAreaChangeEvent } from '~/types'
+import type { TextAreaEvent } from '~/types'
 
 type TextAreaProps = {
-  rows: string | number
   value: string
-  disabled?: boolean
   placeholder: string
-  onChange?: (ev: TextAreaChangeEvent) => void
+  disabled?: boolean
+  rows?: string | number
   type?: 'text' | 'password'
+  onChange?: (ev: TextAreaEvent) => void
 }
 
 export default (props: TextAreaProps) => {

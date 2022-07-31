@@ -1,13 +1,13 @@
 import { createSignal, createResource } from 'solid-js'
+import type { SetStoreFunction } from 'solid-js/store'
 
-import { Actions, State } from '~/State'
-import type { Agent } from './createAgent'
+import { Actions, Agent, State } from '~/types'
 
 export default function createProfile(
   agent: Agent,
   actions: Actions,
   state: State,
-  setState
+  setState: SetStoreFunction<State>
 ) {
   const [username, setUsername] = createSignal<string>()
   const [profile] = createResource(username, agent.Profile.get)

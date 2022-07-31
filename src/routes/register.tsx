@@ -4,6 +4,7 @@ import { useStore } from '~/store'
 import Form from '~/components/Form/Form'
 import NavLink from '~/components/NavBar/NavLink'
 import TextInput from '~/components/Form/TextInput'
+import { TextInputEvent } from '~/types'
 
 type AuthState = {
   username: string
@@ -22,6 +23,8 @@ export default () => {
     inProgress: false
   })
 
+  const handleRegisterRequest = () =>
+    register(state.username, state.email, state.password)
   return (
     <div class='auth-page'>
       <div class='container page'>
@@ -36,30 +39,28 @@ export default () => {
             </p>
             <Form
               buttonText='Sign Up'
-              submitFn={() =>
-                register(state.username, state.email, state.password)
-              }
+              submitFn={handleRegisterRequest}
             >
               <TextInput
                 placeholder='Username'
                 value={state.username}
-                onChange={(event: { target: HTMLInputElement }) =>
-                  setState({ username: event.target.value })
+                onChange={(event: TextInputEvent) =>
+                  setState({ username: event.currentTarget.value })
                 }
               />
               <TextInput
                 placeholder='Email'
                 value={state.email}
-                onChange={(event: { target: HTMLInputElement }) =>
-                  setState({ email: event.target.value })
+                onChange={(event: TextInputEvent) =>
+                  setState({ email: event.currentTarget.value })
                 }
               />
               <TextInput
                 placeholder='Password'
                 type='password'
                 value={state.password}
-                onChange={(event: { target: HTMLInputElement }) =>
-                  setState({ password: event.target.value })
+                onChange={(event: TextInputEvent) =>
+                  setState({ password: event.currentTarget.value })
                 }
               />
             </Form>

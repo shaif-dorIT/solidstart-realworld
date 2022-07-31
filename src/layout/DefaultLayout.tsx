@@ -1,4 +1,4 @@
-import { Children } from '~/Children'
+import type { Children } from '~/types'
 import NavBar from '~/components/NavBar/NavBar'
 
 import './defaultLayout.css'

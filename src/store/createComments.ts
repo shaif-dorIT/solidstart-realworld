@@ -1,9 +1,6 @@
 import { createResource } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
-
-import type { Agent } from './createAgent'
-import { Actions, State } from '~/State'
-import { Comment } from '~/Comment'
+import { Actions, Agent, Comment, State } from '~/types'
 
 export default function createComments(
   agent: Agent,
@@ -11,7 +8,7 @@ export default function createComments(
   state: State,
   setState: SetStoreFunction<State>
 ) {
-  const [comments, { mutate, refetch }] = createResource<Comment[], any>(
+  const [comments, { mutate, refetch }] = createResource<Comment[], string>(
     () => state.articleSlug,
     (slug: string) => agent.Comments.forArticle(slug),
     { initialValue: [] }

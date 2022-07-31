@@ -7,7 +7,7 @@ import NavLink from '~/components/NavBar/NavLink'
 export default () => {
   const { userId } = useParams()
 
-  const [_, { loadArticles }] = useStore()
+  const [, { loadArticles }] = useStore()
 
   onMount(() => loadArticles({ author: userId.slice(1) }))
 

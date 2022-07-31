@@ -6,7 +6,7 @@ import CommentInput from './CommentInput'
 import { useStore } from '~/store'
 import NavLink from '~/components/NavBar/NavLink'
 
-export default (props) => {
+export default (props: { slug: string }) => {
   const [store, { createComment, deleteComment, loadComments }] = useStore()
   const { currentUser } = store
   const handleDeleteComment = (commentId: number) => deleteComment(commentId)

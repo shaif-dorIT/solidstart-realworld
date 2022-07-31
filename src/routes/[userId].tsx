@@ -74,6 +74,7 @@ export default (props: { username: string; routeName: string }) => {
             <Outlet />
 
             <ArticleList
+              currentPage={store.page}
               articles={Object.values(store.articles)}
               totalPagesCount={store.totalPagesCount}
               onSetPage={handleSetPage}

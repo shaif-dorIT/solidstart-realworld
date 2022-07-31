@@ -1,10 +1,11 @@
-import { useStore } from '../store'
+import { useNavigate } from 'solid-app-router'
 import { createStore } from 'solid-js/store'
 
+import { useStore } from '~/store'
 import Form from '~/components/Form/Form'
 import TextArea from '~/components/Form/TextArea'
 import TextInput from '~/components/Form/TextInput'
-import { useNavigate } from 'solid-app-router'
+import { TextAreaEvent, TextInputEvent } from '~/types'
 
 type SettingsState = {
   image: string
@@ -27,8 +28,8 @@ export default () => {
     password: ''
   })
   const updateState =
-    (field: keyof SettingsState) => (ev: { target: HTMLInputElement }) =>
-      setState(field, ev.target.value)
+    (field: keyof SettingsState) => (ev: TextInputEvent | TextAreaEvent) =>
+      setState(field, ev.currentTarget.value)
 
   const submitForm = () => {
     const user = Object.assign({}, state)
@@ -52,7 +53,7 @@ export default () => {
             <Form
               buttonText='Update Settings'
               submitFn={submitForm}
-              postSubmitFn={async () => setState({ updatingUser: false })}
+              postSubmitFn={() => setState({ updatingUser: false })}
               redirect={`@${state.username}`}
             >
               <TextInput

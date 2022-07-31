@@ -5,19 +5,18 @@ export default (props) => {
     props.currentUser &&
     props.currentUser.username === props.comment.author.username
 
-  const comment = () => {
-    const {
-      id,
-      body,
-      author: { username, image },
-      createdAt
-    } = props.comment
+  const author = () => {
     return {
-      id,
-      body,
-      username,
-      image,
-      createdAt
+      username: props.comment.author.username,
+      image: props.comment.author.image
+    }
+  }
+
+  const comment = () => {
+    return {
+      id: props.comment.id,
+      body: props.comment.body,
+      createdAt: props.comment.createdAt
     }
   }
 
@@ -31,23 +30,23 @@ export default (props) => {
       </div>
       <div class='card-footer'>
         <NavLink
-          href={`/@${comment().username}`}
+          href={`/@${author().username}`}
           route='/profile'
           class='comment-author'
         >
           <img
-            src={comment().image}
+            src={author().image}
             class='comment-author-img'
             alt=''
           />
         </NavLink>
         &nbsp;
         <NavLink
-          href={`/@${comment().username}`}
+          href={`/@${author().username}`}
           route='/profile'
           class='comment-author'
         >
-          {comment().username}
+          {author().username}
         </NavLink>
         <span class='date-posted'>
           {new Date(comment().createdAt).toDateString()}

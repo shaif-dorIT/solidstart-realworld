@@ -1,5 +1,6 @@
-import { Parser, Lexer } from 'marked'
 import { onMount } from 'solid-js'
+import DOMPurify from 'dompurify'
+import { Parser, Lexer } from 'marked'
 import { useNavigate, useParams } from 'solid-app-router'
 
 import { useStore } from '~/store'
@@ -42,7 +43,7 @@ export default () => {
               // eslint-disable-next-line solid/no-innerhtml
               innerHTML={
                 article() &&
-                Parser.parse(Lexer.lex(article().body), { sanitize: true })
+                DOMPurify.sanitize(Parser.parse(Lexer.lex(article().body)))
               }
             />
 

@@ -1,8 +1,6 @@
 import { createEffect, createResource } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
-
-import { Actions, State } from '~/State'
-import type { Agent } from './createAgent'
+import { Actions, Agent, State } from '~/types'
 
 export default function createCommon(
   agent: Agent,

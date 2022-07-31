@@ -1,8 +1,8 @@
-import NavLink from '~/components/NavBar/NavLink'
 import { Show } from 'solid-js'
-import { MouseButtonEvent } from '~/types'
+import type { MouseButtonEvent } from '~/types'
+import NavLink from '~/components/NavBar/NavLink'
 
-export default (props: {
+type ArticleMetaProps = {
   article: {
     author: {
       username: string
@@ -13,7 +13,9 @@ export default (props: {
   }
   canModify: boolean
   onDelete: (event: MouseButtonEvent) => void
-}) => {
+}
+
+export default (props: ArticleMetaProps) => {
   return (
     <div class='article-meta'>
       <NavLink

@@ -1,23 +1,25 @@
 import { For, Show, Suspense } from 'solid-js'
 
 import { useStore } from '~/store'
-import type { Article, MouseButtonEvent } from '~/types'
+import type { Article, MouseLIEvent } from '~/types/'
 import ArticlePreview from './ArticlePreview'
 
-export default (props: {
+type ArticleProps = {
   articles: Article[]
   totalPagesCount: number
   currentPage: number
   onSetPage: (page: number) => void
-}) => {
+}
+
+export default (props: ArticleProps) => {
   const [{ token }, { unmakeFavorite, makeFavorite }] = useStore(),
-    handleClickFavorite = (article: Article, event: MouseButtonEvent) => {
+    handleClickFavorite = (article: Article, event) => {
       event.preventDefault()
       article.favorited
         ? unmakeFavorite(article.slug)
         : makeFavorite(article.slug)
     },
-    handlePage = (v, e) => {
+    handlePage = (v: number, e: MouseLIEvent) => {
       e.preventDefault()
       props.onSetPage(v)
       setTimeout(() => window.scrollTo(0, 0), 200)
@@ -47,7 +49,7 @@ export default (props: {
                   <li
                     class='page-item'
                     classList={{ active: props.currentPage === v }}
-                    onClick={[handlePage, v]}
+                    onClick={(ev) => handlePage(v, ev)}
                   >
                     <a
                       class='page-link'
