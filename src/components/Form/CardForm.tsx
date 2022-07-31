@@ -1,31 +1,36 @@
-import { JSX } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { useNavigate } from 'solid-app-router'
 
 import Button from './Button'
 import ListErrors from './ListErrors'
+import type { Children } from '~/types'
 
 type FormState = {
   inProgress: boolean
   errors?: string[]
 }
 
-export default (props: {
+type CardFromProps = {
   class?: string
   avatarUrl: string
   buttonText?: string
-  children?:
-    | number
-    | boolean
-    | Node
-    | JSX.ArrayElement
-    | JSX.FunctionElement
-    | (string & {})
+  children?: Children
   redirect?: string
   submitFn?: (event: Event) => Promise<void>
   postSubmitFn?: () => Promise<void> | void
-}) => {
-  const { avatarUrl, buttonText, children, submitFn, postSubmitFn } = props
+}
+
+export default (props: CardFromProps) => {
+  const cardFormProps = () => {
+    const { avatarUrl, buttonText, children, submitFn, postSubmitFn } = props
+    return {
+      avatarUrl,
+      buttonText,
+      children,
+      submitFn,
+      postSubmitFn
+    }
+  }
 
   const [state, setState] = createStore<FormState>({
     inProgress: false
@@ -36,12 +41,13 @@ export default (props: {
   const handleSubmit = async (event: Event) => {
     event.preventDefault()
     setState({ inProgress: true })
-    submitFn(event)
+    cardFormProps()
+      .submitFn(event)
       .then(() => navigate('/'))
       .catch((errors: string[]) => setState({ errors }))
       .finally(() => setState({ inProgress: false }))
 
-    return postSubmitFn()
+    return cardFormProps().postSubmitFn()
   }
 
   return (
@@ -51,15 +57,15 @@ export default (props: {
         class='card comment-form'
         onSubmit={handleSubmit}
       >
-        <div class='card-block'>{children}</div>
+        <div class='card-block'>{cardFormProps().children}</div>
         <div class='card-footer'>
           <img
-            src={avatarUrl}
+            src={cardFormProps().avatarUrl}
             class='comment-author-img'
             alt=''
           />
           <Button
-            textContent={buttonText}
+            textContent={cardFormProps().buttonText}
             type='submit'
           />
         </div>

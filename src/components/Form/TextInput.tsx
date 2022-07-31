@@ -1,5 +1,7 @@
+import type { Children } from '~/types'
+
 type TextInputProps = {
-  children?: any
+  children?: Children
   value: string
   disabled?: boolean
   placeholder: string

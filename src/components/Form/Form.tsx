@@ -1,36 +1,44 @@
-import { JSX } from 'solid-js'
 import { createStore } from 'solid-js/store'
 import { useNavigate } from 'solid-app-router'
 
 import Button from './Button'
 import ListErrors from './ListErrors'
+import type { Children } from '~/types'
 
 type FormState = {
   inProgress: boolean
   errors?: string[]
 }
 
-export default (props: {
+type FormProps = {
   class?: string
   buttonText?: string
-  children?:
-    | number
-    | boolean
-    | Node
-    | JSX.ArrayElement
-    | JSX.FunctionElement
-    | (string & {})
+  children?: Children
   redirect?: string
   submitFn: (event: Event) => Promise<void> | Promise<any>
   postSubmitFn?: () => Promise<void> | void
-}) => {
-  const {
-    buttonText,
-    submitFn,
-    children,
-    postSubmitFn = () => {},
-    redirect = '/'
-  } = props
+}
+
+export default (props: FormProps) => {
+  const FormProps = () => {
+    const {
+      buttonText,
+      submitFn,
+      children,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      postSubmitFn = () => {},
+      redirect = '/'
+    } = props
+
+    return {
+      buttonText,
+      children,
+      submitFn,
+      postSubmitFn,
+      redirect
+    }
+  }
+
   const [state, setState] = createStore<FormState>({
     inProgress: false
   })
@@ -40,15 +48,18 @@ export default (props: {
   const handleSubmit = async (event: Event) => {
     event.preventDefault()
     setState({ inProgress: true })
-    submitFn(event)
+    FormProps()
+      .submitFn(event)
       .then((resp) => {
-        const url = resp?.slug ? `${redirect}/${resp.slug}` : redirect
+        const url = resp?.slug
+          ? `${FormProps().redirect}/${resp.slug}`
+          : FormProps().redirect
         return navigate(url)
       })
       .catch((errors: string[]) => setState({ errors }))
       .finally(() => setState({ inProgress: false }))
 
-    return postSubmitFn()
+    return FormProps().postSubmitFn()
   }
 
   return (
@@ -59,11 +70,11 @@ export default (props: {
         onSubmit={handleSubmit}
       >
         <fieldset>
-          {children}
+          {FormProps().children}
           <Button
             disabled={state.inProgress}
             type='submit'
-            textContent={buttonText}
+            textContent={FormProps().buttonText}
           />
         </fieldset>
       </form>

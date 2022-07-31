@@ -1,5 +1,7 @@
 const prettierConfig = require('./.prettierrc.cjs')
+
 module.exports = {
+  ignorePatterns: ['.eslintrc.cjs'],
   env: {
     browser: true,
     es2021: true,
@@ -14,11 +16,10 @@ module.exports = {
     'eslint:recommended',
     'plugin:solid/recommended',
     'plugin:prettier/recommended',
-    // "plugin:jsx-a11y/recommended",
     'plugin:@typescript-eslint/recommended'
   ],
   parserOptions: {
-    project: ['./tsconfig.json'], //, './tsconfig.node.json'],
+    project: ['./tsconfig.json'],
     tsconfigRootDir: './'
   },
   plugins: ['prettier', 'solid', '@typescript-eslint', 'import'],

@@ -121,6 +121,7 @@ export default () => {
               </Suspense>
             </div>
           </div>
+          <textarea onChange={(ev) => console.log({ type: typeof ev })} />
         </div>
       </div>
     </div>
