@@ -26,15 +26,10 @@
     "eslint-plugin-solid": "^0.7.1",
     "jsdom": "^19.0.0",
     "prettier": "^2.7.1",
-    "solid-app-router": "^0.4.1",
-    "solid-js": "^1.4.0",
-    "solid-meta": "^0.27.3",
-    "solid-start": "next",
-    "solid-start-node": "next",
+    "solid-app-router": "^0.4.2",
     "solid-testing-library": "^0.3.0",
     "typescript": "^4.4.3",
     "undici": "^4.12.2",
-    "vite": "3.0.3",
     "vite-plugin-inspect": "^0.3.13",
     "vitest": "^0.6.1"
   },
@@ -44,6 +39,10 @@
   "dependencies": {
     "dompurify": "^2.3.10",
     "marked": "^4.0.18",
-    "solid-devtools": "^0.8.0"
+    "solid-js": "^1.4.8",
+    "solid-meta": "^0.28.1",
+    "solid-start": "0.1.0-alpha.89",
+    "solid-start-node": "0.1.0-alpha.82",
+    "vite": "3.0.4"
   }
 }
