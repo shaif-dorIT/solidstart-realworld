@@ -1,15 +1,17 @@
-import { onMount } from 'solid-js'
+import { createEffect } from 'solid-js'
 import { useParams } from 'solid-app-router'
 
 import { useStore } from '~/store'
 import NavLink from '~/components/NavBar/NavLink'
 
 export default () => {
-  const { userId } = useParams()
-
   const [, { loadArticles }] = useStore()
 
-  onMount(() => loadArticles({ author: userId.slice(1) }))
+  const username = () => useParams().userId
+
+  createEffect(() => {
+    loadArticles({ author: username().slice(1) })
+  })
 
   return (
     <div class='articles-toggle'>
@@ -18,7 +20,7 @@ export default () => {
           <NavLink
             class='nav-link'
             active={true}
-            href={`/${userId}`}
+            href={`/${username()}`}
           >
             My Articles
           </NavLink>
@@ -28,7 +30,7 @@ export default () => {
           <NavLink
             class='nav-link'
             active={false}
-            href={`/${userId}/favorites`}
+            href={`/${username()}/favorites`}
           >
             Favorited Articles
           </NavLink>

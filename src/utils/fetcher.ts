@@ -30,8 +30,6 @@ const mutations = async (
 
   const resp = await fetch(API_ROOT + apiPath, fetchOptions)
 
-  console.log({ ok: resp.ok, code: resp.status, text: resp.statusText })
-
   if (resp.ok) {
     return [resp.status, { msg: resp.statusText, data: await resp.json() }]
   } else {

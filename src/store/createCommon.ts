@@ -13,6 +13,7 @@ export default function createCommon(
     async () => {
       const resp = await agent.Tags.getAll()
       if (resp.errors) throw resp.errors
+
       return resp.tags
     },
     { initialValue: [] }

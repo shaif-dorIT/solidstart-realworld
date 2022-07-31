@@ -62,7 +62,8 @@ export default function createArticles(
     articlesCount: number
   }> {
     let resp: MultipleArticlesResponse
-    if (predicate) {
+
+    if (Object.keys(predicate).length > 0) {
       if (predicate.myFeed) {
         resp = await agent.Articles.feed(state.page, LIMIT)
       }

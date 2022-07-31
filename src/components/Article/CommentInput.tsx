@@ -1,13 +1,13 @@
 import { createStore } from 'solid-js/store'
 
-import type { NewComment, TextAreaEvent } from '~/types'
+import type { NewComment, SingleCommentResponse, TextAreaEvent } from '~/types'
 import CardForm from '../Form/CardForm'
 import TextArea from '../Form/TextArea'
 
 const DEFAULT_AVATAR = 'https://api.realworld.io/images/smiley-cyrus.jpeg'
 
 export default (props: {
-  createComment: (NewComment: NewComment) => Promise<void>
+  createComment: (NewComment: NewComment) => Promise<SingleCommentResponse>
   avatarUrl: string
 }) => {
   const [state, setState] = createStore<{

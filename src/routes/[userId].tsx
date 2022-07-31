@@ -1,4 +1,4 @@
-import { createComputed } from 'solid-js'
+import { createEffect } from 'solid-js'
 import { Outlet, useParams } from 'solid-app-router'
 
 import { useStore } from '~/store'
@@ -6,12 +6,18 @@ import NavLink from '~/components/NavBar/NavLink'
 import ArticleList from '~/components/Article/ArticleList'
 
 export default (props: { username: string; routeName: string }) => {
-  const { userId } = useParams()
-
   const [store, { setPage, loadProfile, loadArticles, unfollow, follow }] =
     useStore()
+  const { userId } = useParams()
 
-  createComputed(() => loadProfile(userId.slice(1)))
+  const username = () => {
+    return userId.slice(1)
+  }
+
+  createEffect(() => {
+    loadProfile(username())
+    console.log('HI')
+  })
 
   const handleClick = (ev: Event) => {
     ev.preventDefault()
@@ -24,7 +30,7 @@ export default (props: { username: string; routeName: string }) => {
   }
 
   const isUser = () =>
-    store.currentUser && userId === `@${store.currentUser.username}`
+    store.currentUser && username() === store.currentUser.username
 
   return (
     <div class='profile-page'>
