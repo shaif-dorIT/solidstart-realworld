@@ -10,7 +10,11 @@ export default function createCommon(
 ) {
   const [tags] = createResource<string[], string>(
     'tags',
-    () => agent.Tags.getAll(), //.then((receivedTags) => receivedTags.map((tag) => tag.toLowerCase())),
+    async () => {
+      const resp = await agent.Tags.getAll()
+      if (resp.errors) throw resp.errors
+      return resp.tags
+    },
     { initialValue: [] }
   )
   createEffect(() => {

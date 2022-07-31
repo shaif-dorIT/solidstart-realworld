@@ -12,10 +12,10 @@ describe('<Counter />', () => {
   test('increments value', async () => {
     const { queryByRole, unmount } = render(() => <Counter />)
     const button = (await queryByRole('button')) as HTMLButtonElement
-    expect(button).toBeInTheDocument()
-    expect(button).toHaveTextContent(/Clicks: 0/)
+    expect(button).toBeCalled()
+    expect(button).toHaveProperty('textContent', 'Clicks: 0')
     fireEvent.click(button)
-    expect(button).toHaveTextContent(/Clicks: 1/)
+    expect(button).toHaveProperty('textContent', 'Clicks: 1')
     unmount()
   })
 })

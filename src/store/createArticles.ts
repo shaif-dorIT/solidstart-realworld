@@ -1,5 +1,4 @@
 import type { SetStoreFunction } from 'solid-js/store'
-
 import { createResource, createSignal } from 'solid-js'
 
 import type {
@@ -7,6 +6,7 @@ import type {
   Agent,
   Article,
   ArticlePredicate,
+  MultipleArticlesResponse,
   Optional,
   State,
   Tag
@@ -30,7 +30,7 @@ export default function createArticles(
     | [type: 'article', slug: string]
   >(
     articleSource,
-    (args, { value }) => {
+    async (args, { value }) => {
       // if we ask for articles (plural)
       if (args[0] === 'articles') {
         return $req(args[1]).then(
@@ -48,27 +48,48 @@ export default function createArticles(
       // if we ask for article (single)
       const article = state.articles[args[1]]
       if (article) return value
-      return agent.Articles.get(args[1]).then((singleArticle) => ({
-        ...value,
-        [args[1]]: singleArticle
-      }))
+      const resp = await agent.Articles.get(args[1])
+
+      if (resp.errors) throw resp.errors
+
+      return { ...value, [args[1]]: resp.article }
     },
     { initialValue: {} }
   )
 
-  function $req(predicate: ArticlePredicate) {
-    if (predicate.myFeed) return agent.Articles.feed(state.page, LIMIT)
-    if (predicate.favoritedBy)
-      return agent.Articles.favoritedBy(
-        predicate.favoritedBy,
-        state.page,
-        LIMIT
-      )
-    if (predicate.tag)
-      return agent.Articles.byTag(predicate.tag, state.page, LIMIT)
-    if (predicate.author)
-      return agent.Articles.byAuthor(predicate.author, state.page, LIMIT)
-    return agent.Articles.all(state.page, LIMIT, predicate)
+  async function $req(predicate: ArticlePredicate): Promise<{
+    articles: Article[]
+    articlesCount: number
+  }> {
+    let resp: MultipleArticlesResponse
+    if (predicate) {
+      if (predicate.myFeed) {
+        resp = await agent.Articles.feed(state.page, LIMIT)
+      }
+      if (predicate.favoritedBy) {
+        resp = await agent.Articles.favoritedBy(
+          predicate.favoritedBy,
+          state.page,
+          LIMIT
+        )
+      }
+
+      if (predicate.tag) {
+        resp = await agent.Articles.byTag(predicate.tag, state.page, LIMIT)
+      }
+      if (predicate.author) {
+        resp = await agent.Articles.byAuthor(
+          predicate.author,
+          state.page,
+          LIMIT
+        )
+      }
+    } else {
+      resp = await agent.Articles.all(state.page, LIMIT, predicate)
+    }
+
+    if (resp.errors) throw resp.errors
+    return { articles: resp.articles, articlesCount: resp.articlesCount }
   }
 
   Object.assign(actions, {

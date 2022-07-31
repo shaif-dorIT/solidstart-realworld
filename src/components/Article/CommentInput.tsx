@@ -1,19 +1,22 @@
 import { createStore } from 'solid-js/store'
 
-import { TextAreaChangeEvent } from '~/types'
+import type { NewComment, TextAreaEvent } from '~/types'
 import CardForm from '../Form/CardForm'
 import TextArea from '../Form/TextArea'
 
 const DEFAULT_AVATAR = 'https://api.realworld.io/images/smiley-cyrus.jpeg'
 
-export default (props) => {
+export default (props: {
+  createComment: (NewComment: NewComment) => Promise<void>
+  avatarUrl: string
+}) => {
   const [state, setState] = createStore<{
       body: string
       isCreatingComment?: boolean
     }>({
       body: ''
     }),
-    handleBodyChange = (event: TextAreaChangeEvent) =>
+    handleBodyChange = (event: TextAreaEvent) =>
       setState({ body: event.currentTarget.value })
 
   const createCommentHandler = () => {
