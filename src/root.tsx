@@ -1,7 +1,7 @@
 // @refresh reload
-import { Links, Meta, Routes, Scripts } from 'solid-start/root'
-import { ErrorBoundary } from 'solid-start/error-boundary'
 import { Suspense } from 'solid-js'
+import { ErrorBoundary } from 'solid-start/error-boundary'
+import { Links, Meta, Routes, Scripts } from 'solid-start/root'
 
 import { Provider } from './store'
 import DefaultLayout from './layout/DefaultLayout'
