@@ -14,7 +14,7 @@ export default function createComments(
     { initialValue: [] }
   )
   Object.assign(actions, {
-    loadComments(articleSlug: string, reload) {
+    loadComments(articleSlug: string, reload?: boolean | undefined) {
       if (reload) return refetch()
       setState({ articleSlug })
     },

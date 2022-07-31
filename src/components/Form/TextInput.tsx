@@ -10,15 +10,9 @@ type TextInputProps = {
   value: string
   disabled?: boolean
   placeholder: string
-  onBlur?: (ev: any) => void
-  onKeyUp?: (ev: any) => void
-  onChange?: (ev: any) => void
   onBlur?: (ev: TextInputFocusEvent) => void
   onKeyUp?: (ev: TextInputKeyboardEvent) => void
   onChange?: (ev: TextInputEvent) => void
-  onBlur?: (ev: any) => void
-  onKeyUp?: (ev: any) => void
-  onChange?: (ev: any) => void
   type?: 'text' | 'password'
 }
 

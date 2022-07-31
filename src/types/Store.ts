@@ -1,10 +1,14 @@
-import { Setter } from 'solid-js'
-import { Article } from './entities/Article'
-import { Comment } from './entities/Comment'
-import { Profile } from './entities/Profile'
-import { User } from './entities/User'
-import { Optional } from './Utils'
-import { Tag } from './entities/Tag'
+import type { Setter } from 'solid-js'
+
+import type {
+  Article,
+  Comment,
+  CommentResponse,
+  Optional,
+  Profile,
+  Tag,
+  User
+} from '.'
 
 export type State = {
   readonly articles: { [slug: string]: Article } | null
@@ -36,15 +40,22 @@ export type Actions = {
   setSlug?: (slug: string) => Promise<void>
   unmakeFavorite?: (slug: string) => Promise<void>
   makeFavorite?: (slug: string) => Promise<void>
-  createComment?: any
-  deleteComment?: any
-  loadComments?: any
-  register?: any
-  pullUser?: any
-  login?: any
-  logout?: any
-  setToken?: any
-  updateUser?: any
+  createComment?: (comment: Comment) => Promise<CommentResponse>
+  deleteComment?: (commentId: number) => Promise<CommentResponse>
+  loadComments?: (
+    articleSlug: string,
+    reload?: boolean | undefined
+  ) => Comment[] | Promise<Comment[]>
+  register?: (
+    username: string,
+    email: string,
+    password: string
+  ) => Promise<void>
+  pullUser?: () => true
+  login?: (email: string, password: string) => Promise<void>
+  logout?: () => void
+  updateUser?: (newUser: User) => Promise<void>
+  setToken?: (token: string) => void
   unfollow?: () => Promise<void>
   follow?: () => Promise<void>
   loadProfile?: Setter<string>

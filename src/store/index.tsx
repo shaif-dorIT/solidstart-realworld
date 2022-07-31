@@ -1,6 +1,6 @@
-import { createStore } from 'solid-js/store'
-import { createContext, useContext } from 'solid-js'
 import { isServer } from 'solid-js/web'
+import { createStore } from 'solid-js/store'
+import { createContext, createEffect, useContext } from 'solid-js'
 
 import createAuth from './createAuth'
 import createAgent from './createAgent'
@@ -14,6 +14,7 @@ import type { Actions, Children, State } from '~/types'
 const StoreContext = createContext<[State, Actions]>()
 
 export function Provider(props: { children: Children }) {
+  // eslint-disable-next-line prefer-const
   let articles, comments, tags, profile, currentUser
   const extractToken = () => {
     if (isServer) return undefined
@@ -51,7 +52,9 @@ export function Provider(props: { children: Children }) {
   profile = createProfile(agent, actions, state, setState)
   currentUser = createAuth(agent, actions, setState)
 
-  if (state.token) (actions as Actions).pullUser()
+  createEffect(() => {
+    if (state.token) (actions as Actions).pullUser()
+  })
 
   return (
     <StoreContext.Provider value={store}>

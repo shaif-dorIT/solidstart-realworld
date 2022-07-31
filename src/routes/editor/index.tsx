@@ -1,7 +1,12 @@
 import { For } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
-import type { Article } from '~/types'
+import type {
+  Article,
+  TextAreaEvent,
+  TextInputEvent,
+  TextInputKeyboardEvent
+} from '~/types'
 import { useStore } from '~/store'
 import Form from '~/components/Form/Form'
 import TextArea from '~/components/Form/TextArea'
@@ -18,7 +23,7 @@ type EditorState = {
 }
 
 export default () => {
-  const [_, { createArticle }] = useStore()
+  const [, { createArticle }] = useStore()
   const [state, setState] = createStore<EditorState>({
     body: '',
     title: '',
@@ -28,9 +33,8 @@ export default () => {
   })
 
   const updateState =
-    (field: keyof EditorState) =>
-    (event: { target: HTMLInputElement | HTMLTextAreaElement }) =>
-      setState(field, event.target.value)
+    (field: keyof EditorState) => (event: TextInputEvent | TextAreaEvent) =>
+      setState(field, event.currentTarget.value)
   const handleAddTag = () => {
     if (state.tagInput) {
       setState({ tagList: [...state.tagList, state.tagInput], tagInput: '' })
@@ -41,26 +45,31 @@ export default () => {
       setState('tagList', (tags) => tags.filter((t) => t !== tag))
   }
 
-  const handleTagInputKeyDown = (ev: {
-    keyCode: number
-    preventDefault: () => void
-  }) => {
-    switch (ev.keyCode) {
-      case 13: // Enter
-      case 9: // Tab
-      case 188: // ,
-        if (ev.keyCode !== 9) ev.preventDefault()
+  const handleTagInputKeyDown = (ev: TextInputKeyboardEvent) => {
+    switch (ev.code) {
+      case 'enter': // Enter
+      case 'tab': // Tab
+      case ',': // ,
         handleAddTag()
+        if (ev.code !== 'tab') ev.preventDefault()
         break
       default:
         break
     }
   }
 
-  const submitForm = async (_ev: Event) => {
+  const getFields = () => {
+    return {
+      body: state.body,
+      title: state.title,
+      tagList: state.tagList,
+      description: state.description
+    }
+  }
+
+  const submitForm = async () => {
     setState({ inProgress: true })
-    const { inProgress, tagInput, ...articleFields } = state
-    return createArticle(articleFields as Article)
+    return createArticle(getFields() as Article)
   }
 
   const postSubmit = () => setState({ inProgress: false })

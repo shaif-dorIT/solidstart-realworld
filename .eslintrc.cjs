@@ -1,7 +1,7 @@
+// eslint-disable-next-line @typescript-eslint/no-var-requires
 const prettierConfig = require('./.prettierrc.cjs')
 
 module.exports = {
-  ignorePatterns: ['.eslintrc.cjs'],
   env: {
     browser: true,
     es2021: true,
