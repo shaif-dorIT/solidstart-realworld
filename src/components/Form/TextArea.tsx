@@ -1,23 +1,25 @@
+import type { TextAreaEvent } from '~/types'
+
 type TextAreaProps = {
-  children?: any;
-  value: string;
-  disabled?: boolean;
-  placeholder: string;
-  onChange?: (ev: any) => void;
-  type?: "text" | "password";
-};
+  value: string
+  placeholder: string
+  disabled?: boolean
+  rows?: string | number
+  type?: 'text' | 'password'
+  onChange?: (ev: TextAreaEvent) => void
+}
 
 export default (props: TextAreaProps) => {
   return (
-    <fieldset class="form-group">
+    <fieldset class='form-group'>
       <textarea
-        class="form-control form-control-lg"
+        class='form-control form-control-lg'
         rows={props.rows}
         placeholder={props.placeholder}
         value={props.value}
-        onChange={props.onChange}
+        onChange={(event) => props.onChange(event)}
         disabled={props.disabled}
       />
     </fieldset>
-  );
-};
+  )
+}

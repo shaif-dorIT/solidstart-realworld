@@ -1,28 +1,32 @@
-import { onMount } from "solid-js";
-import { useParams } from "solid-app-router";
+import { onMount } from 'solid-js'
+import { useParams } from 'solid-app-router'
 
-import { useStore } from "~/store";
-import NavLink from "~/components/NavBar/NavLink";
+import { useStore } from '~/store'
+import NavLink from '~/components/NavBar/NavLink'
 
 export default () => {
-  const { userId } = useParams();
+  const { userId } = useParams()
 
-  const [_, { loadArticles }] = useStore();
+  const [, { loadArticles }] = useStore()
 
-  onMount(() => loadArticles({ author: userId.slice(1) }));
+  onMount(() => loadArticles({ author: userId.slice(1) }))
 
   return (
-    <div class="articles-toggle">
-      <ul class="nav nav-pills outline-active">
-        <li class="nav-item">
-          <NavLink class="nav-link" active={true} href={`/${userId}`}>
+    <div class='articles-toggle'>
+      <ul class='nav nav-pills outline-active'>
+        <li class='nav-item'>
+          <NavLink
+            class='nav-link'
+            active={true}
+            href={`/${userId}`}
+          >
             My Articles
           </NavLink>
         </li>
 
-        <li class="nav-item">
+        <li class='nav-item'>
           <NavLink
-            class="nav-link"
+            class='nav-link'
             active={false}
             href={`/${userId}/favorites`}
           >
@@ -31,5 +35,5 @@ export default () => {
         </li>
       </ul>
     </div>
-  );
-};
+  )
+}

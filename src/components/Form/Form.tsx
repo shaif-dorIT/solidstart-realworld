@@ -1,69 +1,83 @@
-import { JSX } from "solid-js";
-import { createStore } from "solid-js/store";
-import { useNavigate } from "solid-app-router";
+import { createStore } from 'solid-js/store'
+import { useNavigate } from 'solid-app-router'
 
-import Button from "./Button";
-import ListErrors from "./ListErrors";
+import Button from './Button'
+import ListErrors from './ListErrors'
+import type { Children } from '~/types'
 
 type FormState = {
-  inProgress: boolean;
-  errors?: string[];
-};
+  inProgress: boolean
+  errors?: string[]
+}
 
-export default (props: {
-  class?: string;
-  buttonText?: string;
-  children?:
-    | number
-    | boolean
-    | Node
-    | JSX.ArrayElement
-    | JSX.FunctionElement
-    | (string & {});
-  redirect?: string;
-  submitFn: (event: Event) => Promise<void> | Promise<any>;
-  postSubmitFn?: () => Promise<void> | void;
-}) => {
-  const {
-    buttonText,
-    submitFn,
-    children,
-    postSubmitFn = () => {},
-    redirect = "/",
-  } = props;
+type FormProps = {
+  class?: string
+  buttonText?: string
+  children?: Children
+  redirect?: string
+  submitFn: (event: Event) => Promise<void> | Promise<unknown>
+  postSubmitFn?: () => Promise<void> | void
+}
+
+export default (props: FormProps) => {
+  const FormProps = () => {
+    const {
+      buttonText,
+      submitFn,
+      children,
+      // eslint-disable-next-line @typescript-eslint/no-empty-function
+      postSubmitFn = () => {},
+      redirect = '/'
+    } = props
+
+    return {
+      buttonText,
+      children,
+      submitFn,
+      postSubmitFn,
+      redirect
+    }
+  }
+
   const [state, setState] = createStore<FormState>({
-    inProgress: false,
-  });
+    inProgress: false
+  })
 
-  const navigate = useNavigate();
+  const navigate = useNavigate()
 
   const handleSubmit = async (event: Event) => {
-    event.preventDefault();
-    setState({ inProgress: true });
-    submitFn(event)
+    event.preventDefault()
+    setState({ inProgress: true })
+    FormProps()
+      .submitFn(event)
       .then((resp) => {
-        const url = resp?.slug ? `${redirect}/${resp.slug}` : redirect;
-        return navigate(url);
+        const url = resp?.slug
+          ? `${FormProps().redirect}/${resp.slug}`
+          : FormProps().redirect
+        return navigate(url)
       })
       .catch((errors: string[]) => setState({ errors }))
-      .finally(() => setState({ inProgress: false }));
+      .finally(() => setState({ inProgress: false }))
 
-    return postSubmitFn();
-  };
+    return FormProps().postSubmitFn()
+  }
 
   return (
     <>
       <ListErrors errors={state.errors} />
-      <form class={props.class} onSubmit={handleSubmit}>
+      <form
+        class={props.class}
+        onSubmit={handleSubmit}
+      >
         <fieldset>
-          {children}
+          {FormProps().children}
           <Button
             disabled={state.inProgress}
-            type="submit"
-            textContent={buttonText}
+            type='submit'
+            textContent={FormProps().buttonText}
           />
         </fieldset>
       </form>
     </>
-  );
-};
+  )
+}

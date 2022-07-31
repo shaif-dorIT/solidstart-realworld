@@ -41,6 +41,7 @@
     "node": ">=14"
   },
   "dependencies": {
+    "dompurify": "^2.3.10",
     "marked": "^4.0.18",
     "solid-devtools": "^0.8.0"
   }

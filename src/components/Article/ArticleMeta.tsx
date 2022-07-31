@@ -1,53 +1,65 @@
-import NavLink from "~/components/NavBar/NavLink";
-import { JSX, Show } from "solid-js";
+import { Show } from 'solid-js'
+import type { MouseButtonEvent } from '~/types'
+import NavLink from '~/components/NavBar/NavLink'
 
-export default (props: {
+type ArticleMetaProps = {
   article: {
     author: {
-      username: string;
-      image: string;
-    };
-    createdAt: string | number | Date;
-    slug: string;
-  };
-  canModify: any;
-  onDelete: JSX.EventHandlerUnion<HTMLButtonElement, MouseEvent>;
-}) => {
+      username: string
+      image: string
+    }
+    createdAt: string | number | Date
+    slug: string
+  }
+  canModify: boolean
+  onDelete: (event: MouseButtonEvent) => void
+}
+
+export default (props: ArticleMetaProps) => {
   return (
-    <div class="article-meta">
-      <NavLink href={`/@${props.article?.author.username}`} route="/profile">
-        <img src={props.article?.author.image} alt="" />
+    <div class='article-meta'>
+      <NavLink
+        href={`/@${props.article?.author.username}`}
+        route='/profile'
+      >
+        <img
+          src={props.article?.author.image}
+          alt=''
+        />
       </NavLink>
 
-      <div class="info">
+      <div class='info'>
         <NavLink
           href={`/@${props.article?.author.username}`}
-          route="/profile"
-          class="author"
+          route='/profile'
+          class='author'
         >
           {props.article?.author.username}
         </NavLink>
-        <span class="date">
+        <span class='date'>
           {new Date(props.article?.createdAt).toDateString()}
         </span>
       </div>
 
-      <Show when={props.canModify} fallback={<span />}>
+      <Show
+        when={props.canModify}
+        fallback={<span />}
+      >
         <span>
           <NavLink
             href={`/editor/${props.article.slug}`}
-            class="btn btn-outline-secondary btn-sm"
+            class='btn btn-outline-secondary btn-sm'
           >
-            <i class="ion-edit" /> Edit Article
-          </NavLink>{" "}
+            <i class='ion-edit' /> Edit Article
+          </NavLink>{' '}
           <button
-            class="btn btn-outline-danger btn-sm"
-            onClick={props.onDelete}
+            class='btn btn-outline-danger btn-sm'
+            onClick={(event) => props.onDelete(event)}
           >
-            <i class="ion-trash-a" /> Delete Article
+            <i class='ion-trash-a' /> Delete Article
           </button>
         </span>
       </Show>
     </div>
-  );
-};
+  )
+}

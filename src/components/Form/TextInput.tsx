@@ -1,28 +1,42 @@
+import type {
+  Children,
+  TextInputEvent,
+  TextInputFocusEvent,
+  TextInputKeyboardEvent
+} from '~/types'
+
 type TextInputProps = {
-  children?: any;
-  value: string;
-  disabled?: boolean;
-  placeholder: string;
-  onBlur?: (ev: any) => void;
-  onKeyUp?: (ev: any) => void;
-  onChange?: (ev: any) => void;
-  type?: "text" | "password";
-};
+  children?: Children
+  value: string
+  disabled?: boolean
+  placeholder: string
+  onBlur?: (ev: TextInputFocusEvent) => void
+  onKeyUp?: (ev: TextInputKeyboardEvent) => void
+  onChange?: (ev: TextInputEvent) => void
+  type?: 'text' | 'password'
+}
 
 export default (props: TextInputProps) => {
+  const events = () => {
+    return {
+      onBlur: props.onBlur,
+      onKeyUp: props.onKeyUp,
+      onChange: props.onChange
+    }
+  }
   return (
-    <fieldset class="form-group">
+    <fieldset class='form-group'>
       <input
-        class="form-control form-control-lg"
+        class='form-control form-control-lg'
         type={props.type}
         value={props.value}
         disabled={props.disabled}
-        onBlur={props.onBlur}
-        onKeyUp={props.onKeyUp}
-        onChange={props.onChange}
+        onBlur={events().onBlur}
+        onKeyUp={events().onKeyUp}
+        onChange={events().onChange}
         placeholder={props.placeholder}
       />
       {props.children}
     </fieldset>
-  );
-};
+  )
+}
