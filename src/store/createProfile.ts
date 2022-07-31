@@ -1,13 +1,7 @@
 import { createSignal, createResource } from 'solid-js'
-<<<<<<< HEAD
 import type { SetStoreFunction } from 'solid-js/store'
 
 import { Actions, Agent, State } from '~/types'
-=======
-
-import { Actions, State } from '~/State'
-import type { Agent } from './createAgent'
->>>>>>> master
 
 export default function createProfile(
   agent: Agent,

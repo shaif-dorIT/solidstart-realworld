@@ -1,13 +1,6 @@
 import { createResource } from 'solid-js'
 import type { SetStoreFunction } from 'solid-js/store'
-<<<<<<< HEAD
 import { Actions, Agent, Comment, State } from '~/types'
-=======
-
-import type { Agent } from './createAgent'
-import { Actions, State } from '~/State'
-import { Comment } from '~/Comment'
->>>>>>> master
 
 export default function createComments(
   agent: Agent,

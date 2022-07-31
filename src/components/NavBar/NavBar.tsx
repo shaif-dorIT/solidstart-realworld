@@ -1,12 +1,7 @@
 import { Show } from 'solid-js'
-<<<<<<< HEAD
 
 import NavLink from './NavLink'
 import { useStore } from '~/store'
-=======
-import { useStore } from '~/store'
-import NavLink from './NavLink'
->>>>>>> master
 
 export default () => {
   const [store] = useStore()
@@ -14,10 +9,6 @@ export default () => {
   return (
     <nav class='navbar navbar-light'>
       <div class='container'>
-<<<<<<< HEAD
-=======
-        {/* <div style={"background-color: 'lightblue;height: 50vh'"}>{JSON.stringify(store)}</div> */}
->>>>>>> master
         <NavLink
           class='navbar-brand'
           route='/'
