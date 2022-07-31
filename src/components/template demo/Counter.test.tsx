@@ -16,5 +16,6 @@ describe('<Counter />', () => {
     expect(button).toHaveTextContent(/Clicks: 0/)
     fireEvent.click(button)
     expect(button).toHaveTextContent(/Clicks: 1/)
+    unmount()
   })
 })
