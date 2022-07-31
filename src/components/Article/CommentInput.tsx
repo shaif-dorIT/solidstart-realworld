@@ -1,9 +1,16 @@
 import { createStore } from 'solid-js/store'
+<<<<<<< HEAD
 
 import { TextAreaChangeEvent } from '~/types'
 import CardForm from '../Form/CardForm'
 import TextArea from '../Form/TextArea'
 
+=======
+import { TextAreaChangeEvent } from '~/types'
+import CardForm from '../Form/CardForm'
+import TextArea from '../Form/TextArea'
+
+>>>>>>> master
 const DEFAULT_AVATAR = 'https://api.realworld.io/images/smiley-cyrus.jpeg'
 
 export default (props) => {

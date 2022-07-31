@@ -13,6 +13,7 @@
   },
   "type": "module",
   "devDependencies": {
+    "@originjs/vite-plugin-commonjs": "^1.0.3",
     "@testing-library/jest-dom": "^5.16.2",
     "@types/marked": "^4.0.3",
     "@types/testing-library__jest-dom": "^5.14.3",
@@ -33,7 +34,7 @@
     "solid-testing-library": "^0.3.0",
     "typescript": "^4.4.3",
     "undici": "^4.12.2",
-    "vite": "^3.0.3",
+    "vite": "3.0.3",
     "vite-plugin-inspect": "^0.3.13",
     "vitest": "^0.6.1"
   },
@@ -41,8 +42,12 @@
     "node": ">=14"
   },
   "dependencies": {
+<<<<<<< HEAD
     "dompurify": "^2.3.10",
     "marked": "^4.0.18",
     "solid-devtools": "^0.8.0"
+=======
+    "marked": "^4.0.18"
+>>>>>>> master
   }
 }

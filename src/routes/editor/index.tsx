@@ -1,7 +1,11 @@
 import { For } from 'solid-js'
 import { createStore } from 'solid-js/store'
 
+<<<<<<< HEAD
 import type { Article } from '~/types'
+=======
+import { Article } from '~/Article'
+>>>>>>> master
 import { useStore } from '~/store'
 import Form from '~/components/Form/Form'
 import TextArea from '~/components/Form/TextArea'

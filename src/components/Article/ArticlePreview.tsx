@@ -1,7 +1,12 @@
 import { For } from 'solid-js'
 
+<<<<<<< HEAD
 import NavLink from '../NavBar/NavLink'
 import type { Article, MouseButtonEvent } from '~/types'
+=======
+import type { Article, MouseButtonEvent } from '~/types'
+import NavLink from '../NavBar/NavLink'
+>>>>>>> master
 
 const FAVORITED_CLASS = 'btn btn-sm btn-primary'
 const NOT_FAVORITED_CLASS = 'btn btn-sm btn-outline-primary'

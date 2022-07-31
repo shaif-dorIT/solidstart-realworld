@@ -50,7 +50,11 @@ export type Agent = {
       email: string,
       password: string
     ) => Promise<UserResponse>
+<<<<<<< HEAD
     save: (user: Optional<User, keyof User>) => Promise<UserResponse>
+=======
+    save: (user: Optional<User, keyof User>) => Promise<User>
+>>>>>>> master
   }
   Comments: {
     create: (slug: string, comment: Comment) => Promise<CommentResponse>
