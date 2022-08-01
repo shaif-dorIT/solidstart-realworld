@@ -1,9 +1,10 @@
 import { Outlet, useParams } from 'solid-start'
-import { createEffect, Suspense } from 'solid-js'
+import { createComputed, createEffect, Suspense } from 'solid-js'
 
 import { useStore } from '~/store'
 import NavLink from '~/components/NavBar/NavLink'
 import ArticleList from '~/components/Article/ArticleList'
+import type { Profile } from '~/types'
 
 export default () => {
   const appSettings = () => {
@@ -28,6 +29,10 @@ export default () => {
 
   createEffect(() => {
     appSettings().actions.loadProfile(username())
+  })
+  let profile: Profile = {}
+  createComputed(() => {
+    profile = appSettings().store.profile
   })
 
   const handleClick = (ev: Event) => {
@@ -54,12 +59,12 @@ export default () => {
             <div class='row'>
               <div class='col-xs-12 col-md-10 offset-md-1'>
                 <img
-                  src={appSettings().store.profile?.image}
+                  src={profile.image}
                   class='user-img'
                   alt=''
                 />
                 <h4 textContent={username()} />
-                <p>{appSettings().store.profile?.bio}</p>
+                <p>{profile.bio}</p>
                 {isUser() && (
                   <NavLink
                     active={false}
@@ -73,17 +78,14 @@ export default () => {
                   <button
                     class='btn btn-sm action-btn'
                     classList={{
-                      'btn-secondary': appSettings().store.profile?.following,
-                      'btn-outline-secondary':
-                        !appSettings().store.profile?.following
+                      'btn-secondary': profile.following,
+                      'btn-outline-secondary': !profile.following
                     }}
                     onClick={handleClick}
                   >
                     <i class='ion-plus-round' />{' '}
-                    {appSettings().store.profile?.following
-                      ? 'Unfollow'
-                      : 'Follow'}{' '}
-                    {appSettings().store.profile?.username}
+                    {profile.following ? 'Unfollow' : 'Follow'}{' '}
+                    {profile.username}
                   </button>
                 )}
               </div>
