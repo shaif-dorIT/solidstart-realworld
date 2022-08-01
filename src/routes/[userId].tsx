@@ -5,8 +5,8 @@ import { useStore } from '~/store'
 import NavLink from '~/components/NavBar/NavLink'
 import ArticleList from '~/components/Article/ArticleList'
 
-export default (props: { username: string; routeName: string }) => {
-  const appStore = () => {
+export default () => {
+  const appSettings = () => {
     const [store, { setPage, loadProfile, loadArticles, unfollow, follow }] =
       useStore()
     return {
@@ -27,24 +27,24 @@ export default (props: { username: string; routeName: string }) => {
   }
 
   createEffect(() => {
-    appStore().actions.loadProfile(username())
+    appSettings().actions.loadProfile(username())
   })
 
   const handleClick = (ev: Event) => {
     ev.preventDefault()
-    appStore().store.profile.following
-      ? appStore().actions.unfollow()
-      : appStore().actions.follow()
+    appSettings().store.profile.following
+      ? appSettings().actions.unfollow()
+      : appSettings().actions.follow()
   }
 
   const handleSetPage = (page: number) => {
-    appStore().actions.setPage(page)
-    appStore().actions.loadArticles({})
+    appSettings().actions.setPage(page)
+    appSettings().actions.loadArticles({})
   }
 
   const isUser = () =>
-    appStore().store.currentUser &&
-    username() === appStore().store.currentUser.username
+    appSettings().store.currentUser &&
+    username() === appSettings().store.currentUser.username
 
   return (
     <div class='profile-page'>
@@ -53,12 +53,12 @@ export default (props: { username: string; routeName: string }) => {
           <div class='row'>
             <div class='col-xs-12 col-md-10 offset-md-1'>
               <img
-                src={appStore().store.profile?.image}
+                src={appSettings().store.profile?.image}
                 class='user-img'
                 alt=''
               />
-              <h4 textContent={props.username} />
-              <p>{appStore().store.profile?.bio}</p>
+              <h4 textContent={username()} />
+              <p>{appSettings().store.profile?.bio}</p>
               {isUser() && (
                 <NavLink
                   active={false}
@@ -68,19 +68,21 @@ export default (props: { username: string; routeName: string }) => {
                   <i class='ion-gear-a' /> Edit Profile Settings
                 </NavLink>
               )}
-              {appStore().store.token && !isUser() && (
+              {appSettings().store.token && !isUser() && (
                 <button
                   class='btn btn-sm action-btn'
                   classList={{
-                    'btn-secondary': appStore().store.profile?.following,
+                    'btn-secondary': appSettings().store.profile?.following,
                     'btn-outline-secondary':
-                      !appStore().store.profile?.following
+                      !appSettings().store.profile?.following
                   }}
                   onClick={handleClick}
                 >
                   <i class='ion-plus-round' />{' '}
-                  {appStore().store.profile?.following ? 'Unfollow' : 'Follow'}{' '}
-                  {appStore().store.profile?.username}
+                  {appSettings().store.profile?.following
+                    ? 'Unfollow'
+                    : 'Follow'}{' '}
+                  {appSettings().store.profile?.username}
                 </button>
               )}
             </div>
@@ -94,9 +96,9 @@ export default (props: { username: string; routeName: string }) => {
             <Outlet />
 
             <ArticleList
-              currentPage={appStore().store.page}
-              articles={Object.values(appStore().store.articles)}
-              totalPagesCount={appStore().store.totalPagesCount}
+              currentPage={appSettings().store.page}
+              articles={Object.values(appSettings().store.articles)}
+              totalPagesCount={appSettings().store.totalPagesCount}
               onSetPage={handleSetPage}
             />
           </div>
