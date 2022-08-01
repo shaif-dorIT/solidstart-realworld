@@ -1,24 +1,31 @@
 import fs from 'fs'
 import path from 'path'
 
+const vite_ref_matcher = /import vite from "vite";/
+
+function fix_vite_imports(filepath) {
+  fs.readFile(filepath, 'utf8', (err, data) => {
+    if (err) throw err
+    fs.writeFile(
+      filepath,
+      data.replace(vite_ref_matcher, 'import * as vite from "vite";'),
+      'utf8',
+      function (error) {
+        if (error) throw error
+      }
+    )
+  })
+}
+
+const startNode = path.resolve('node_modules', 'solid-start-node', 'index.js')
 const client_adapter = path.resolve(
   'node_modules',
   'solid-start',
   'client-adapter.js'
 )
 
-const vite_ref_matcher = /import vite from "vite";/
-fs.readFile(client_adapter, 'utf8', (err, data) => {
-  if (err) throw err
-  fs.writeFile(
-    client_adapter,
-    data.replace(vite_ref_matcher, 'import * as vite from "vite";'),
-    'utf8',
-    function (error) {
-      if (error) throw error
-    }
-  )
-})
+fix_vite_imports(startNode)
+fix_vite_imports(client_adapter)
 
 if (process.NODE_ENV !== 'production') {
   const typesPath = path.resolve(
