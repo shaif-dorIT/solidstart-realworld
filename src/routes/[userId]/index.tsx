@@ -23,6 +23,8 @@ export default (props) => {
   }
 
   createEffect(() => {
+    console.log({ props })
+
     appSettings().actions.loadArticles({ author: username() })
     if (props.profile) appSettings().actions.loadProfile(username())
   })
