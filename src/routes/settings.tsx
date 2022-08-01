@@ -1,5 +1,5 @@
+import { useNavigate } from 'solid-start'
 import { createStore } from 'solid-js/store'
-import { useNavigate } from 'solid-app-router'
 
 import { useStore } from '~/store'
 import Form from '~/components/Form/Form'

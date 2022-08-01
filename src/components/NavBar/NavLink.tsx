@@ -1,4 +1,4 @@
-import { useParams } from 'solid-app-router'
+import { useParams } from 'solid-start'
 
 import type { Children } from '~/types'
 

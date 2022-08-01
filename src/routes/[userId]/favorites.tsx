@@ -1,5 +1,5 @@
+import { useParams } from 'solid-start'
 import { createEffect } from 'solid-js'
-import { useParams } from 'solid-app-router'
 
 import { useStore } from '~/store'
 import NavLink from '~/components/NavBar/NavLink'

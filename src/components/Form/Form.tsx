@@ -1,5 +1,5 @@
+import { useNavigate } from 'solid-start'
 import { createStore } from 'solid-js/store'
-import { useNavigate } from 'solid-app-router'
 
 import Button from './Button'
 import ListErrors from './ListErrors'

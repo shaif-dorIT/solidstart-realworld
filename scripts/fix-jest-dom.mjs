@@ -18,14 +18,14 @@ function fix_vite_imports(filepath) {
 }
 
 const startNode = path.resolve('node_modules', 'solid-start-node', 'index.js')
-const client_adapter = path.resolve(
-  'node_modules',
-  'solid-start',
-  'client-adapter.js'
-)
+// const client_adapter = path.resolve(
+//   'node_modules',
+//   'solid-start',
+//   'client-adapter.js'
+// )
 
 fix_vite_imports(startNode)
-fix_vite_imports(client_adapter)
+// fix_vite_imports(client_adapter)
 
 if (process.NODE_ENV !== 'production') {
   const typesPath = path.resolve(

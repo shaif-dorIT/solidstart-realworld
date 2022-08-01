@@ -2,10 +2,14 @@
 /// <reference types="vite/client" />
 import { defineConfig } from 'vite'
 
-import solid from 'solid-start'
+import solid from 'solid-start/vite'
 
 export default defineConfig({
-  plugins: [solid()],
+  plugins: [
+    solid({
+      ssr: true
+    })
+  ],
   build: {
     target: 'esnext',
     polyfillModulePreload: false
