@@ -5,12 +5,13 @@ import { useStore } from '~/store'
 import NavLink from '~/components/NavBar/NavLink'
 
 export default () => {
-  const [, { loadArticles }] = useStore()
+  const [, { loadArticles, loadProfile }] = useStore()
 
   const username = () => useParams().userId
 
   createEffect(() => {
     loadArticles({ favoritedBy: username().slice(1) })
+    loadProfile(username())
   })
 
   return (
