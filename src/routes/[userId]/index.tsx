@@ -7,10 +7,10 @@ import NavLink from '~/components/NavBar/NavLink'
 export default () => {
   const [, { loadArticles, loadProfile }] = useStore()
 
-  const username = () => useParams().userId
+  const username = () => useParams().userId.slice(1)
 
   createEffect(() => {
-    loadArticles({ author: username().slice(1) })
+    loadArticles({ author: username() })
     loadProfile(username())
   })
 
@@ -21,7 +21,7 @@ export default () => {
           <NavLink
             class='nav-link'
             active={true}
-            href={`/${username()}`}
+            href={`/@${username()}`}
           >
             My Articles
           </NavLink>
@@ -31,7 +31,7 @@ export default () => {
           <NavLink
             class='nav-link'
             active={false}
-            href={`/${username()}/favorites`}
+            href={`/@${username()}/favorites`}
           >
             Favorited Articles
           </NavLink>
