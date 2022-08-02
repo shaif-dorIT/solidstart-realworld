@@ -6,25 +6,26 @@ import NavLink from '~/components/NavBar/NavLink'
 import ArticleList from '~/components/Article/ArticleList'
 
 export default () => {
-  const appSettings = () => {
-    const [store, { setPage, loadProfile, loadArticles, unfollow, follow }] =
-      useStore()
-    return {
-      store,
-      actions: {
-        follow,
-        unfollow,
-        setPage,
-        loadArticles,
-        loadProfile
-      }
-    }
-  }
+  const [store, { setPage, loadProfile, loadArticles, unfollow, follow }] =
+    useStore()
   const { userId } = useParams()
 
   const username = () => {
     return userId.slice(1)
   }
+
+  const handleClick = (ev: Event) => {
+    ev.preventDefault()
+    store.profile.following ? unfollow() : follow()
+  }
+
+  const handleSetPage = (page: number) => {
+    setPage(page)
+    loadArticles({})
+  }
+
+  const isUser = () =>
+    store.currentUser && username() === store.currentUser.username
 
   createEffect(() => {
     loadProfile(username())
@@ -32,7 +33,59 @@ export default () => {
 
   return (
     <div class='profile-page'>
-      <Outlet />
+      <div class='user-info'>
+        <div class='container'>
+          <div class='row'>
+            <div class='col-xs-12 col-md-10 offset-md-1'>
+              <img
+                src={store.profile?.image}
+                class='user-img'
+                alt=''
+              />
+              <h4 textContent={username()} />
+              <p>{store.profile?.bio}</p>
+              {isUser() && (
+                <NavLink
+                  active={false}
+                  route='/settings'
+                  class='btn btn-sm btn-outline-secondary action-btn'
+                >
+                  <i class='ion-gear-a' /> Edit Profile Settings
+                </NavLink>
+              )}
+              {store.token && !isUser() && (
+                <button
+                  class='btn btn-sm action-btn'
+                  classList={{
+                    'btn-secondary': store.profile?.following,
+                    'btn-outline-secondary': !store.profile?.following
+                  }}
+                  onClick={handleClick}
+                >
+                  <i class='ion-plus-round' />{' '}
+                  {store.profile?.following ? 'Unfollow' : 'Follow'}{' '}
+                  {store.profile?.username}
+                </button>
+              )}
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class='container'>
+        <div class='row'>
+          <div class='col-xs-12 col-md-10 offset-md-1'>
+            <Outlet />
+
+            <ArticleList
+              currentPage={store.page}
+              articles={Object.values(store.articles)}
+              totalPagesCount={store.totalPagesCount}
+              onSetPage={handleSetPage}
+            />
+          </div>
+        </div>
+      </div>
     </div>
   )
 }
