@@ -16,7 +16,6 @@ export default (props: { username: string; routeName: string }) => {
 
   createEffect(() => {
     loadProfile(username())
-    console.log('HI')
   })
 
   const handleClick = (ev: Event) => {
