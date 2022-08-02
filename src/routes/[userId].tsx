@@ -2,7 +2,7 @@ import { createEffect } from 'solid-js'
 import { Outlet, useParams } from 'solid-start'
 
 import { useStore } from '~/store'
-import NavLink from '~/components/NavBar/NavLink'
+import UserInfo from '~/components/Profile/UserInfo'
 import ArticleList from '~/components/Article/ArticleList'
 
 export default () => {
@@ -33,44 +33,13 @@ export default () => {
 
   return (
     <div class='profile-page'>
-      <div class='user-info'>
-        <div class='container'>
-          <div class='row'>
-            <div class='col-xs-12 col-md-10 offset-md-1'>
-              <img
-                src={store.profile?.image}
-                class='user-img'
-                alt=''
-              />
-              <h4 textContent={username()} />
-              <p>{store.profile?.bio}</p>
-              {isUser() && (
-                <NavLink
-                  active={false}
-                  route='/settings'
-                  class='btn btn-sm btn-outline-secondary action-btn'
-                >
-                  <i class='ion-gear-a' /> Edit Profile Settings
-                </NavLink>
-              )}
-              {store.token && !isUser() && (
-                <button
-                  class='btn btn-sm action-btn'
-                  classList={{
-                    'btn-secondary': store.profile?.following,
-                    'btn-outline-secondary': !store.profile?.following
-                  }}
-                  onClick={handleClick}
-                >
-                  <i class='ion-plus-round' />{' '}
-                  {store.profile?.following ? 'Unfollow' : 'Follow'}{' '}
-                  {store.profile?.username}
-                </button>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
+      <UserInfo
+        profile={store.profile}
+        token={store.token}
+        isUser={isUser}
+        handleClick={handleClick}
+        username={username()}
+      />
 
       <div class='container'>
         <div class='row'>
