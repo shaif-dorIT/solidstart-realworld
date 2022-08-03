@@ -4,11 +4,9 @@ import {
   renderAsync
 } from 'solid-start/entry-server'
 
-export default createHandler(
-  renderAsync((event) => (
-    <StartServer
-      context={event}
-      event={event}
-    />
-  ))
-)
+import validateEnv from '~/utils/validateEnv'
+
+export default createHandler(() => {
+  validateEnv()
+  return renderAsync((event) => <StartServer event={event} />)()
+})
