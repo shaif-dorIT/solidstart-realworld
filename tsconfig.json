@@ -19,7 +19,8 @@
     "src/**/*",
     "vite.config.ts",
     ".eslintrc.cjs",
-    "typings/index.d.ts"
+    "typings/index.d.ts",
+    "prisma"
   ],
   "exclude": ["node_modules", "typings/index.d.ts", "**/*.spec.ts", "scripts"]
 }

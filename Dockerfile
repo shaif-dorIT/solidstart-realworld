@@ -1,5 +1,9 @@
 FROM node:16-alpine as base
 
+RUN apk update \
+    && apk upgrade --no-cache \
+    && rm -rf /var/cache/apk/*
+
 RUN curl -sL https://unpkg.com/@pnpm/self-installer | node
 
 WORKDIR /app
@@ -27,9 +31,10 @@ USER node
 
 WORKDIR /app
 
-COPY --from=builder /app/dist /app
+COPY ["package.json", "pnpm-lock.yaml", "./" ]
+
+COPY --from=builder /app/dist /app/dist
 
 RUN pnpm i --production
-
 
 CMD [ "pnpm", "start" ]

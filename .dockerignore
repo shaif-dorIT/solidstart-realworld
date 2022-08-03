@@ -1,0 +1,7 @@
+# ignore all directories and files execpt the following paths:
+*
+!/src
+!/prisma
+!/package.json
+!/tsconfig.json
+!/pnpm-lock.yaml

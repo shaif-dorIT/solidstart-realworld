@@ -6,10 +6,17 @@
     "start": "solid-start start",
     "postinstall": "node ./scripts/fix-jest-dom.mjs",
     "typecheck": "tsc -b",
-    "format": "prettier --write \"**/*.+(cjs|js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|gql|graphql|mdx|vue)\"",
-    "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext js,jsx,ts,tsx .",
-    "lintfix": "eslint --ext js,jsx,ts,tsx . --fix",
-    "test": "vitest run"
+    "format": "prettier --write \"**/*.+(mjs|cjs|js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|gql|graphql|mdx|vue)\"",
+    "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext js,jsx,ts,tsx \"{src,test}/**/*.ts\"",
+    "lint:fix": "pnpm run lint -- --fix",
+    "test": "vitest run",
+    "prisma:migrate": "prisma migrate dev --skip-seed",
+    "prisma:format": "prisma format",
+    "prisma:generate": "prisma generate",
+    "prisma:generate:watch": "prisma generate --watch",
+    "prisma:seed": "prisma db seed --preview-feature",
+    "prisma:studio": "prisma studio",
+    "prisma:reset": "prisma migrate reset"
   },
   "type": "module",
   "devDependencies": {
@@ -27,6 +34,7 @@
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-solid": "^0.7.1",
     "jsdom": "^19.0.0",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
     "solid-js": "^1.4.0",
     "solid-start": "0.1.0-alpha.97",
@@ -42,7 +50,21 @@
     "node": ">=14"
   },
   "dependencies": {
+    "@prisma/client": "^4.1.1",
     "dompurify": "^2.3.10",
-    "marked": "^4.0.18"
+    "marked": "^4.0.18",
+    "prisma": "^4.1.1",
+    "slugify": "^1.6.5"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run prisma:format",
+      "npm run lint:fix",
+      "npm run prettier:write",
+      "git add"
+    ]
   }
 }
