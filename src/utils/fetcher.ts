@@ -1,4 +1,4 @@
-import type { RequestContext } from 'solid-start/server/types'
+import type { ApiFetchEvent } from 'solid-start/api/types'
 
 const API_ROOT = 'https://api.realworld.io/api'
 
@@ -66,79 +66,73 @@ const query = async (
   }
 }
 
-export const getWrapper = async (ctx: RequestContext) => {
-  const apiPath = new URL(ctx.request.url).pathname.slice(4)
+export const getWrapper = async (event: ApiFetchEvent) => {
+  const apiPath = new URL(event.request.url).pathname.slice(4)
 
-  const authHeader = ctx.request.headers.get('Authorization') ?? undefined
+  const authHeader = event.request.headers.get('Authorization') ?? undefined
   const splitted = authHeader?.split(' ')
   const token = splitted && splitted.length == 2 ? splitted[1] : undefined
   const [statusCode, resp] = await query(apiPath, { token })
 
   if (statusCode >= 200 && statusCode < 300) {
     return new Response(JSON.stringify(resp.data), {
-      context: ctx,
       status: statusCode,
       statusText: resp.msg
     })
   } else {
     return new Response(JSON.stringify({ message: resp.msg }), {
-      context: ctx,
       status: statusCode,
       statusText: 'OK'
     })
   }
 }
 
-export const postWrapper = async (ctx: RequestContext) => {
-  const apiPath = new URL(ctx.request.url).pathname.slice(4)
+export const postWrapper = async (event: ApiFetchEvent) => {
+  const apiPath = new URL(event.request.url).pathname.slice(4)
 
-  const body = (await ctx.request.json()) ?? undefined
+  const body = (await event.request.json()) ?? undefined
   const token =
-    ctx.request.headers.get('Authorization')?.split(' ')[1] ?? undefined
+    event.request.headers.get('Authorization')?.split(' ')[1] ?? undefined
 
   const [statusCode, resp] = await mutations('post', apiPath, { body, token })
 
   if (statusCode >= 200 && statusCode < 300) {
     return new Response(JSON.stringify(resp.data), {
-      context: ctx,
       status: statusCode,
       statusText: resp.msg
     })
   } else {
     return new Response(JSON.stringify({ message: resp.msg }), {
-      context: ctx,
       status: statusCode,
       statusText: 'OK'
     })
   }
 }
 
-export const putWrapper = async (ctx: RequestContext) => {
-  const apiPath = new URL(ctx.request.url).pathname.slice(4)
-  const body = (await ctx.request.json()) ?? undefined
+export const putWrapper = async (event: ApiFetchEvent) => {
+  const apiPath = new URL(event.request.url).pathname.slice(4)
+  const body = (await event.request.json()) ?? undefined
   const token =
-    ctx.request.headers.get('Authorization')?.split(' ')[1] ?? undefined
+    event.request.headers.get('Authorization')?.split(' ')[1] ?? undefined
 
   const [statusCode, resp] = await mutations('put', apiPath, { body, token })
 
   if (statusCode >= 200 && statusCode < 300) {
     return new Response(JSON.stringify(resp.data), {
-      context: ctx,
       status: statusCode,
       statusText: resp.msg
     })
   } else {
     return new Response(JSON.stringify({ message: resp.msg }), {
-      context: ctx,
       status: statusCode,
       statusText: 'OK'
     })
   }
 }
 
-export const delWrapper = async (ctx: RequestContext) => {
-  const apiPath = new URL(ctx.request.url).pathname.slice(4)
-  const authHeader = ctx.request.headers.get('Authorization') ?? undefined
+export const delWrapper = async (event: ApiFetchEvent) => {
+  const apiPath = new URL(event.request.url).pathname.slice(4)
+  const authHeader = event.request.headers.get('Authorization') ?? undefined
   const splitted = authHeader?.split(' ')
   const token = splitted && splitted.length == 2 ? splitted[1] : undefined
 
@@ -146,13 +140,11 @@ export const delWrapper = async (ctx: RequestContext) => {
 
   if (statusCode >= 200 && statusCode < 300) {
     return new Response(JSON.stringify(resp.data), {
-      context: ctx,
       status: statusCode,
       statusText: resp.msg
     })
   } else {
     return new Response(JSON.stringify({ message: resp.msg }), {
-      context: ctx,
       status: statusCode,
       statusText: 'OK'
     })
