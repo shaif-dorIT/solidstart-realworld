@@ -4,17 +4,20 @@ import { Outlet, useParams } from 'solid-start'
 import { useStore } from '~/store'
 import UserInfo from '~/components/Profile/UserInfo'
 import ArticleList from '~/components/Article/ArticleList'
+import type { MouseButtonEvent } from '~/types'
 
 export default () => {
   const [store, { setPage, loadProfile, loadArticles, unfollow, follow }] =
     useStore()
-  const { userId } = useParams()
-
-  const username = () => {
-    return userId.slice(1)
+  const userId = () => {
+    return useParams().userId
   }
 
-  const handleClick = (ev: Event) => {
+  const username = () => {
+    return userId().slice(1)
+  }
+
+  const handleClick = (ev: MouseButtonEvent) => {
     ev.preventDefault()
     store.profile.following ? unfollow() : follow()
   }

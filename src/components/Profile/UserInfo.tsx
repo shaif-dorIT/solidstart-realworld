@@ -1,27 +1,37 @@
-import type { Profile } from '~/types'
 import NavLink from '../NavBar/NavLink'
+import type { MouseButtonEvent, Profile } from '~/types'
 
 export default (props: {
   token: string
   profile: Profile
   username: string
   isUser: () => boolean
-  handleClick: (ev: Event) => void
+  handleClick: (ev: MouseButtonEvent) => void
 }) => {
-  const { token, profile, username, isUser, handleClick } = props
+  const info = () => {
+    const { token, profile, username, isUser, handleClick } = props
+    return {
+      token,
+      profile,
+      username,
+      isUser,
+      handleClick
+    }
+  }
+
   return (
     <div class='user-info'>
       <div class='container'>
         <div class='row'>
           <div class='col-xs-12 col-md-10 offset-md-1'>
             <img
-              src={profile?.image}
+              src={info().profile?.image}
               class='user-img'
               alt=''
             />
-            <h4 textContent={username} />
-            <p>{profile?.bio}</p>
-            {isUser() && (
+            <h4 textContent={info().profile?.username} />
+            <p>{info().profile?.bio}</p>
+            {info().isUser() && (
               <NavLink
                 active={false}
                 route='/settings'
@@ -30,17 +40,18 @@ export default (props: {
                 <i class='ion-gear-a' /> Edit Profile Settings
               </NavLink>
             )}
-            {token && !isUser() && (
+            {info().token && !info().isUser() && (
               <button
                 class='btn btn-sm action-btn'
                 classList={{
-                  'btn-secondary': profile?.following,
-                  'btn-outline-secondary': !profile?.following
+                  'btn-secondary': info().profile?.following,
+                  'btn-outline-secondary': !info().profile?.following
                 }}
-                onClick={handleClick}
+                onClick={info().handleClick}
               >
                 <i class='ion-plus-round' />{' '}
-                {profile?.following ? 'Unfollow' : 'Follow'} {profile?.username}
+                {info().profile?.following ? 'Unfollow' : 'Follow'}{' '}
+                {info().profile?.username}
               </button>
             )}
           </div>

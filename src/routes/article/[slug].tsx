@@ -47,8 +47,6 @@ export default () => {
               }
             />
 
-            <hr />
-
             <ul class='tag-list'>
               {article()?.tagList.map((tag) => (
                 <li class='tag-default tag-pill tag-outline'>{tag}</li>

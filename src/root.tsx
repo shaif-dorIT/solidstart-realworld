@@ -58,7 +58,7 @@ export default function Root() {
         <Link
           rel='shortcut icon'
           type='image/x-icon'
-          href='//demo.productionready.io/favicon.ico'
+          href='/favicon.ico'
         />
       </Head>
       <Body>
