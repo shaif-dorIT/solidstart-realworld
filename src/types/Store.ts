@@ -1,5 +1,5 @@
-import { UserName } from './entities/User'
 import type { Setter } from 'solid-js'
+import { PrismaClient } from '@prisma/client'
 
 import type {
   Article,
@@ -15,7 +15,8 @@ import type {
   ProfileResponse,
   UserResponse,
   UpdateArticle,
-  NewComment
+  NewComment,
+  UserName
 } from '~/types'
 
 export type State = {
@@ -24,6 +25,7 @@ export type State = {
   readonly tags: Tag[] | null
   readonly profile: Profile | null
   readonly currentUser: User | null
+  readonly dbClient: PrismaClient | null
   page: number
   totalPagesCount: number
   token: string

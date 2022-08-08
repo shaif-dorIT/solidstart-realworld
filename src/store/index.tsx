@@ -2,6 +2,7 @@ import { isServer } from 'solid-js/web'
 import { createStore } from 'solid-js/store'
 import { createContext, createEffect, useContext } from 'solid-js'
 
+import getClient from '~/services/db'
 import createAuth from './createAuth'
 import createAgent from './createAgent'
 import createCommon from './createCommon'
@@ -11,15 +12,17 @@ import createComments from './createComments'
 
 import type { Actions, Children, State } from '~/types'
 
+const dbClient = await getClient()
 const StoreContext = createContext<[State, Actions]>()
 
-export function Provider(props: { children: Children }) {
+export async function Provider(props: { children: Children }) {
   // eslint-disable-next-line prefer-const
   let articles, comments, tags, profile, currentUser
   const extractToken = () => {
     if (isServer) return undefined
     return localStorage.getItem('jwt') ?? undefined
   }
+
   const [state, setState] = createStore({
     get articles() {
       return articles()
@@ -35,6 +38,9 @@ export function Provider(props: { children: Children }) {
     },
     get currentUser() {
       return currentUser()
+    },
+    get dbClient() {
+      return dbClient
     },
     page: 0,
     totalPagesCount: 0,

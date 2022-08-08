@@ -3,7 +3,6 @@ import {
   createHandler,
   renderAsync
 } from 'solid-start/entry-server'
-
 import dotenv from 'dotenv'
 
 dotenv.config()
