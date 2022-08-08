@@ -62,7 +62,8 @@
     "jsonwebtoken": "^8.5.1",
     "marked": "^4.0.18",
     "prisma": "^4.1.1",
-    "slugify": "^1.6.5"
+    "slugify": "^1.6.5",
+    "vest": "^4.6.1"
   },
   "prisma": {
     "seed": "ts-node prisma/seed.ts"

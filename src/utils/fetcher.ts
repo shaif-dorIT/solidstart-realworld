@@ -1,3 +1,4 @@
+import { Suite } from 'vest'
 import type { ApiFetchEvent } from 'solid-start/api/types'
 
 const API_ROOT = 'https://api.realworld.io/api'
@@ -7,17 +8,37 @@ const mutations = async (
   apiPath: string,
   {
     body,
-    token
+    token,
+    suite
   }: {
     body?: unknown
     token?: string
+    suite?: Suite<(data: unknown) => void>
   }
-): Promise<[number, { msg: string; data?: string }]> => {
+): Promise<[number, { msg: string; data?: object }]> => {
   const fetchOptions: RequestInit = {
     method: method
   }
 
   if (body) {
+    if (suite) {
+      const result = suite(body)
+      if (!result.isValid())
+        return [
+          422,
+          {
+            data: {
+              errors: {
+                body: Object.values(result.getErrors()).flatMap(
+                  (string) => string
+                )
+              }
+            },
+            msg: 'Bad request'
+          }
+        ]
+    }
+
     fetchOptions.body = JSON.stringify(body)
     fetchOptions.headers = {
       'Content-Type': 'application/json'
@@ -87,16 +108,24 @@ export const getWrapper = async (event: ApiFetchEvent) => {
   }
 }
 
-export const postWrapper = async (event: ApiFetchEvent) => {
+export const postWrapper = async (
+  event: ApiFetchEvent,
+  suite: Suite<(data: unknown) => void>
+) => {
   const apiPath = new URL(event.request.url).pathname.slice(4)
 
   const body = (await event.request.json()) ?? undefined
+
   const token =
     event.request.headers.get('Authorization')?.split(' ')[1] ?? undefined
 
-  const [statusCode, resp] = await mutations('post', apiPath, { body, token })
+  const [statusCode, resp] = await mutations('post', apiPath, {
+    body,
+    token,
+    suite
+  })
 
-  if (statusCode >= 200 && statusCode < 300) {
+  if ((statusCode >= 200 && statusCode < 300) || statusCode === 422) {
     return new Response(JSON.stringify(resp.data), {
       status: statusCode,
       statusText: resp.msg
@@ -104,20 +133,27 @@ export const postWrapper = async (event: ApiFetchEvent) => {
   } else {
     return new Response(JSON.stringify({ message: resp.msg }), {
       status: statusCode,
-      statusText: 'OK'
+      statusText: resp.msg
     })
   }
 }
 
-export const putWrapper = async (event: ApiFetchEvent) => {
+export const putWrapper = async (
+  event: ApiFetchEvent,
+  suite: Suite<(data: unknown) => void>
+) => {
   const apiPath = new URL(event.request.url).pathname.slice(4)
   const body = (await event.request.json()) ?? undefined
   const token =
     event.request.headers.get('Authorization')?.split(' ')[1] ?? undefined
 
-  const [statusCode, resp] = await mutations('put', apiPath, { body, token })
+  const [statusCode, resp] = await mutations('put', apiPath, {
+    body,
+    token,
+    suite
+  })
 
-  if (statusCode >= 200 && statusCode < 300) {
+  if ((statusCode >= 200 && statusCode < 300) || statusCode === 422) {
     return new Response(JSON.stringify(resp.data), {
       status: statusCode,
       statusText: resp.msg
@@ -125,7 +161,7 @@ export const putWrapper = async (event: ApiFetchEvent) => {
   } else {
     return new Response(JSON.stringify({ message: resp.msg }), {
       status: statusCode,
-      statusText: 'OK'
+      statusText: resp.msg
     })
   }
 }

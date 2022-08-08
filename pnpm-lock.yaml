@@ -37,6 +37,7 @@ specifiers:
   ts-node: ^10.9.1
   typescript: ^4.7.4
   undici: ^5.8.1
+  vest: ^4.6.1
   vite: 3.0.4
   vite-plugin-inspect: ^0.6.0
   vitest: ^0.21.0
@@ -52,6 +53,7 @@ dependencies:
   marked: 4.0.18
   prisma: 4.1.1
   slugify: 1.6.5
+  vest: 4.6.1
 
 devDependencies:
   '@solidjs/meta': 0.28.0_solid-js@1.4.7
@@ -2408,6 +2410,12 @@ packages:
     resolution: {integrity: sha512-ty/fTekppD2fIwRvnZAVdeOiGd1c7YXEixbgJTNzqcxJWKQnjJ/V1bNEEE6hygpM3WjwHFUVK6HTjWSzV4a8sQ==}
     dev: false
 
+  /context/3.0.1:
+    resolution: {integrity: sha512-ZfQuo26hLk5W0ndyuw6i7YB9qyP1N6afUHybH/j8dHrvoZU2pxzdNLm5JvhiX40kwkoO7Zeg1HYW/w5MYEXc3Q==}
+    dependencies:
+      vest-utils: 0.0.2
+    dev: false
+
   /convert-source-map/1.8.0:
     resolution: {integrity: sha512-+OQdjP49zViI/6i7nIJpA8rAl4sV/JdPfU9nZs3VqOwGIgizICvuN2ru6fMd+4llL0tar18UYJXfZ/TWtmhUjA==}
     dependencies:
@@ -4177,6 +4185,13 @@ packages:
   /ms/2.1.3:
     resolution: {integrity: sha512-6FlzubTLZG3J2a/NVCAleEhjzq5oxgHyaCU9yYXvcLsvoVaHJq/s5xXI6/XXP6tz7R9xAOtHnSO/tXtF3WRTlA==}
 
+  /n4s/4.2.1:
+    resolution: {integrity: sha512-sLnzwMH0HV9PxLAptbuNpby5Og0Bmt1iyTgFsaXYz3Oo3Gi0E/vhmEgvM94JEfeSW9lKZghpXuWwev/96JdkCA==}
+    dependencies:
+      context: 3.0.1
+      vest-utils: 0.0.2
+    dev: false
+
   /nanoid/3.3.4:
     resolution: {integrity: sha512-MqBkQh/OHTS2egovRtLk45wEyNXwF+cokD+1YPf9u5VfJiRdAiRwB2froX5Co9Rh20xs4siNPm8naNotSD6RBw==}
     engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
@@ -5315,6 +5330,18 @@ packages:
     resolution: {integrity: sha512-BNGbWLfd0eUPabhkXUVm0j8uuvREyTh5ovRa/dyow/BqAbZJyC+5fU+IzQOzmAKzYqYRAISoRhdQr3eIZ/PXqg==}
     engines: {node: '>= 0.8'}
     dev: true
+
+  /vest-utils/0.0.2:
+    resolution: {integrity: sha512-E+5ZAjUPn9vhJ9Pq/C2gBR02hKq8HrjELmsTsyX13Vwheeja4XVwzYRfPDIuox11QDQ7Mdf8VFLjH8JeRLIs9A==}
+    dev: false
+
+  /vest/4.6.1:
+    resolution: {integrity: sha512-YggYTzLhWEwBsUEiZfZxZ1ZDna/dKBgPxWpRzwn+W60nuYT/dO9weUj++qQQ2+OnhZbsTc08FgaITcwNTK+ftA==}
+    dependencies:
+      context: 3.0.1
+      n4s: 4.2.1
+      vest-utils: 0.0.2
+    dev: false
 
   /vite-plugin-inspect/0.6.0_vite@3.0.4:
     resolution: {integrity: sha512-p2Ti5z+AscXx7JAW1nkU4bgiyKWW3O6D9UbaOEk+yz0v6R2E452OSukYhbs1zhqRnHL0W6ZsmG/lwz8aSQpSjg==}
