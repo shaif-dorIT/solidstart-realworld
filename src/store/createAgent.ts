@@ -86,7 +86,7 @@ export default function createAgent([state, actions]: [State, Actions]): Agent {
 
   const Tags: Agent['Tags'] = {
     getAll: async () => {
-      const resp = await send('get', '/tags', undefined, 'tags')
+      const resp = await send('get', '/tags')
       return resp.data ? resp.data : resp.errors
     }
   }

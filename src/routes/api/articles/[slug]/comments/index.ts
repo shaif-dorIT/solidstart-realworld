@@ -1,10 +1,11 @@
-import type { RequestContext } from 'solid-start/server/types'
+import type { ApiFetchEvent } from 'solid-start/api/types'
+
 import { getWrapper, postWrapper } from '~/utils/fetcher'
 
-export const get = async (ctx: RequestContext) => {
-  return getWrapper(ctx)
+export const get = async (event: ApiFetchEvent) => {
+  return getWrapper(event)
 }
 
-export const post = async (ctx: RequestContext) => {
-  return postWrapper(ctx)
+export const post = async (event: ApiFetchEvent) => {
+  return postWrapper(event)
 }

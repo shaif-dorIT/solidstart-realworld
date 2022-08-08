@@ -1,4 +1,4 @@
-import { Outlet } from 'solid-app-router'
+import { Outlet } from 'solid-start'
 
 import { useStore } from '~/store'
 

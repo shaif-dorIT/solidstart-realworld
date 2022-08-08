@@ -1,4 +1,4 @@
-import { useParams } from 'solid-app-router'
+import { useParams } from 'solid-start'
 import { createStore } from 'solid-js/store'
 import { createComputed, createEffect, For, Show } from 'solid-js'
 

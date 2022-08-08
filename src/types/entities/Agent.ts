@@ -26,7 +26,7 @@ export type Agent = {
       author: string,
       page: number,
       size?: number
-    ) => Promise<SingleArticleResponse>
+    ) => Promise<MultipleArticlesResponse>
     byTag: (
       tag: string,
       page: number,

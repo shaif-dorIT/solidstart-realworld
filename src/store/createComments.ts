@@ -10,7 +10,13 @@ export default function createComments(
 ) {
   const [comments, { mutate, refetch }] = createResource<Comment[], string>(
     () => state.articleSlug,
-    (slug: string) => agent.Comments.forArticle(slug),
+    async (slug: string) => {
+      if (!slug) return []
+      const resp = await agent.Comments.forArticle(slug)
+      if (resp.errors) throw resp.errors
+
+      return resp.comments
+    },
     { initialValue: [] }
   )
   Object.assign(actions, {

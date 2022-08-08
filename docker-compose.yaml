@@ -1,0 +1,28 @@
+version: '3.8'
+services:
+  node:
+    container_name: 'node-16-server'
+    restart: 'unless-stopped'
+    build: '.'
+    ports:
+      - 3000:3000
+    depends_on:
+      - 'postgresql'
+    volumes:
+      - .:/app
+
+  postgresql:
+    image: docker.io/bitnami/postgresql:14
+    restart: 'unless-stopped'
+    ports:
+      - '5432:5432'
+    volumes:
+      - 'postgresql_data:/bitnami/postgresql'
+    environment:
+      - POSTGRESQL_USERNAME=${DB_USER}
+      - POSTGRESQL_PASSWORD=${DB_PASS}
+      - POSTGRESQL_DATABASE=${DB_NAME}
+
+volumes:
+  postgresql_data:
+    driver: local

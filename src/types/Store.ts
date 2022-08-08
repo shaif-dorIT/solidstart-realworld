@@ -14,7 +14,8 @@ import type {
   SingleCommentResponse,
   ProfileResponse,
   UserResponse,
-  UpdateArticle
+  UpdateArticle,
+  NewComment
 } from '~/types'
 
 export type State = {
@@ -45,7 +46,7 @@ export type Actions = {
   setSlug?: (slug: string) => Promise<void>
   unmakeFavorite?: (slug: string) => Promise<SingleArticleResponse>
   makeFavorite?: (slug: string) => Promise<SingleArticleResponse>
-  createComment?: (comment: Comment) => Promise<SingleCommentResponse>
+  createComment?: (comment: NewComment) => Promise<SingleCommentResponse>
   deleteComment?: (commentId: number) => Promise<SingleCommentResponse>
   loadComments?: (
     articleSlug: string,

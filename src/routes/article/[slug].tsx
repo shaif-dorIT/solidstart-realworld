@@ -1,7 +1,7 @@
 import DOMPurify from 'dompurify'
 import { onMount } from 'solid-js'
 import { Parser, Lexer } from 'marked'
-import { useNavigate, useParams } from 'solid-app-router'
+import { useNavigate, useParams } from 'solid-start'
 
 import { useStore } from '~/store'
 import Comments from '~/components/Article/Comments'
@@ -46,8 +46,6 @@ export default () => {
                 DOMPurify.sanitize(Parser.parse(Lexer.lex(article().body)))
               }
             />
-
-            <hr />
 
             <ul class='tag-list'>
               {article()?.tagList.map((tag) => (

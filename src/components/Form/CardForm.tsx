@@ -1,9 +1,9 @@
+import { useNavigate } from 'solid-start'
 import { createStore } from 'solid-js/store'
-import { useNavigate } from 'solid-app-router'
 
 import Button from './Button'
 import ListErrors from './ListErrors'
-import type { Children } from '~/types'
+import type { Children, EntityResponse } from '~/types'
 
 type FormState = {
   inProgress: boolean
@@ -16,7 +16,7 @@ type CardFromProps = {
   buttonText?: string
   children?: Children
   redirect?: string
-  submitFn?: (event: Event) => Promise<void>
+  submitFn?: (entity?: unknown) => Promise<EntityResponse> | Promise<void>
   postSubmitFn?: () => Promise<void> | void
 }
 

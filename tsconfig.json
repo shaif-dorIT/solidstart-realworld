@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "skipLibCheck": true,
     "allowSyntheticDefaultImports": true,
     "esModuleInterop": true,
     "target": "ESNext",
@@ -7,12 +8,19 @@
     "moduleResolution": "node",
     "jsxImportSource": "solid-js",
     "jsx": "preserve",
-    "types": ["vite/client", "vitest"],
+    "typeRoots": ["./typings"],
+    "types": ["vite/client", "vitest", "@testing-library/jest-dom"],
     "baseUrl": "./",
     "paths": {
       "~/*": ["./src/*"]
     }
   },
-  "include": ["src/**/*", "vite.config.ts", ".eslintrc.cjs", "index.d.ts"],
-  "exclude": ["node_modules", "**/*.spec.ts", "scripts/**/*"]
+  "include": [
+    "src/**/*",
+    "vite.config.ts",
+    ".eslintrc.cjs",
+    "vitest.setup.ts",
+    "prisma"
+  ],
+  "exclude": ["node_modules", "**/*.spec.ts", "scripts"]
 }

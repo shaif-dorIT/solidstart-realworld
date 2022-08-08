@@ -4,46 +4,71 @@
     "dev": "solid-start dev",
     "build": "solid-start build",
     "start": "solid-start start",
-    "postinstall": "node ./scripts/fix-jest-dom.mjs",
     "typecheck": "tsc -b",
-    "format": "prettier --write \"**/*.+(cjs|js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|gql|graphql|mdx|vue)\"",
-    "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext js,jsx,ts,tsx .",
-    "lintfix": "eslint --ext js,jsx,ts,tsx . --fix",
-    "test": "vitest run"
+    "format": "prettier --write \"**/*.+(mjs|cjs|js|jsx|json|yml|yaml|css|less|scss|ts|tsx|md|gql|graphql|mdx|vue)\"",
+    "lint": "eslint --cache --cache-location ./node_modules/.cache/.eslintcache --ext js,jsx,ts,tsx \"{src,test}/**/*.ts\"",
+    "lint:fix": "pnpm run lint -- --fix",
+    "test": "vitest run",
+    "prisma:migrate": "prisma migrate dev --skip-seed",
+    "prisma:format": "prisma format",
+    "prisma:generate": "prisma generate",
+    "prisma:generate:watch": "prisma generate --watch",
+    "prisma:seed": "prisma db seed --preview-feature",
+    "prisma:studio": "prisma studio",
+    "prisma:reset": "prisma migrate reset"
   },
   "type": "module",
   "devDependencies": {
-    "@testing-library/jest-dom": "^5.16.2",
+    "@solidjs/meta": "^0.28.0",
+    "@solidjs/router": "^0.4.2",
+    "@testing-library/jest-dom": "^5.16.5",
     "@types/dompurify": "^2.3.3",
     "@types/marked": "^4.0.3",
-    "@types/testing-library__jest-dom": "^5.14.3",
-    "@typescript-eslint/eslint-plugin": "^5.31.0",
-    "@typescript-eslint/parser": "^5.31.0",
-    "eslint": "^8.20.0",
+    "@types/node": "*",
+    "@types/testing-library__jest-dom": "^5.14.4",
+    "@typescript-eslint/eslint-plugin": "^5.32.0",
+    "@typescript-eslint/parser": "^5.32.0",
+    "eslint": "^8.21.0",
     "eslint-config-prettier": "^8.5.0",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-prettier": "^4.2.1",
     "eslint-plugin-solid": "^0.7.1",
-    "jsdom": "^19.0.0",
+    "jsdom": "^20.0.0",
+    "lint-staged": "^13.0.3",
     "prettier": "^2.7.1",
-    "solid-app-router": "^0.4.1",
-    "solid-js": "^1.4.0",
-    "solid-meta": "^0.27.3",
+    "rollup": "^2.77.2",
+    "solid-js": "1.4.7",
     "solid-start": "next",
     "solid-start-node": "next",
     "solid-testing-library": "^0.3.0",
-    "typescript": "^4.4.3",
-    "undici": "^4.12.2",
-    "vite": "3.0.3",
-    "vite-plugin-inspect": "^0.3.13",
-    "vitest": "^0.6.1"
+    "ts-node": "^10.9.1",
+    "typescript": "^4.7.4",
+    "undici": "^5.8.1",
+    "vite": "3.0.4",
+    "vite-plugin-inspect": "^0.6.0",
+    "vitest": "^0.21.0"
   },
   "engines": {
     "node": ">=14"
   },
   "dependencies": {
+    "@prisma/client": "^4.1.1",
     "dompurify": "^2.3.10",
+    "dotenv": "^16.0.1",
+    "envalid": "^7.3.1",
     "marked": "^4.0.18",
-    "solid-devtools": "^0.8.0"
+    "prisma": "^4.1.1",
+    "slugify": "^1.6.5"
+  },
+  "prisma": {
+    "seed": "ts-node prisma/seed.ts"
+  },
+  "lint-staged": {
+    "*.ts": [
+      "npm run prisma:format",
+      "npm run lint:fix",
+      "npm run prettier:write",
+      "git add"
+    ]
   }
 }
