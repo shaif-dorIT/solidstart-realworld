@@ -25,7 +25,6 @@ export type State = {
   readonly tags: Tag[] | null
   readonly profile: Profile | null
   readonly currentUser: User | null
-  readonly dbClient: PrismaClient | null
   page: number
   totalPagesCount: number
   token: string

@@ -2,6 +2,9 @@
 *
 !/src
 !/prisma
+!/vite.config.ts
 !/package.json
 !/tsconfig.json
 !/pnpm-lock.yaml
+!/.npmrc
+!/.pnpmfile.cjs
